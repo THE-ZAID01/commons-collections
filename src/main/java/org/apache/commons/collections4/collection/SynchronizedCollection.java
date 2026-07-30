@@ -38,7 +38,7 @@ import java.util.function.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 3.0
  */
 public class SynchronizedCollection<E> implements Collection<E>, Serializable {
@@ -47,11 +47,11 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     private static final long serialVersionUID = 2412805092710877986L;
 
     /**
-     * Factory method to create a synchronized collection.
+     * Creates a synchronized collection.
      *
-     * @param <T> the type of the elements in the collection
-     * @param coll  the collection to decorate, must not be null
-     * @return a new synchronized collection
+     * @param <T> The type of the elements in the collection
+     * @param coll  The collection to decorate, must not be null
+     * @return A new synchronized collection
      * @throws NullPointerException if collection is null
      * @since 4.0
      */
@@ -66,9 +66,9 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     protected final Object lock;
 
     /**
-     * Constructor that wraps (not copies).
+     * Constructs and wraps (not copies).
      *
-     * @param collection  the collection to decorate, must not be null
+     * @param collection  The collection to decorate, must not be null
      * @throws NullPointerException if the collection is null
      */
     protected SynchronizedCollection(final Collection<E> collection) {
@@ -77,10 +77,10 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     /**
-     * Constructor that wraps (not copies).
+     * Constructs and wraps (not copies).
      *
-     * @param collection  the collection to decorate, must not be null
-     * @param lock  the lock object to use, must not be null
+     * @param collection  The collection to decorate, must not be null
+     * @param lock  The lock object to use, must not be null
      * @throws NullPointerException if the collection or lock is null
      */
     protected SynchronizedCollection(final Collection<E> collection, final Object lock) {
@@ -126,7 +126,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Gets the collection being decorated.
      *
-     * @return the decorated collection
+     * @return The decorated collection
      */
     protected Collection<E> decorated() {
         return collection;
@@ -165,7 +165,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * }
      * </pre>
      *
-     * @return an iterator that must be manually synchronized on the collection
+     * @return An iterator that must be manually synchronized on the collection
      */
     @Override
     public Iterator<E> iterator() {

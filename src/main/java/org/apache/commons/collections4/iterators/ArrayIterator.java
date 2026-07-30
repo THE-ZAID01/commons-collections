@@ -17,16 +17,17 @@
 package org.apache.commons.collections4.iterators;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * Implements an {@link java.util.Iterator Iterator} over any array.
+ * Implements an {@link Iterator Iterator} over any array.
  * <p>
  * The array can be either an array of object or of primitives. If you know
  * that you have an object array, the
- * {@link org.apache.commons.collections4.iterators.ObjectArrayIterator ObjectArrayIterator}
+ * {@link ObjectArrayIterator ObjectArrayIterator}
  * class is a better choice, as it will perform better.
  * </p>
  * <p>
@@ -34,7 +35,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * the iterator back to the start if required.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 1.0
  */
 public class ArrayIterator<E> implements ResettableIterator<E> {
@@ -55,7 +56,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * Constructs an ArrayIterator that will iterate over the values in the
      * specified array.
      *
-     * @param array the array to iterate over.
+     * @param array The array to iterate over.
      * @throws IllegalArgumentException if {@code array} is not an array.
      * @throws NullPointerException if {@code array} is {@code null}
      */
@@ -67,8 +68,8 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * Constructs an ArrayIterator that will iterate over the values in the
      * specified array from a specific start index.
      *
-     * @param array  the array to iterate over.
-     * @param startIndex  the index to start iterating at.
+     * @param array  The array to iterate over.
+     * @param startIndex  The index to start iterating at.
      * @throws IllegalArgumentException if {@code array} is not an array.
      * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -81,9 +82,9 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * Constructs an ArrayIterator that will iterate over a range of values
      * in the specified array.
      *
-     * @param array  the array to iterate over.
-     * @param startIndex  the index to start iterating at.
-     * @param endIndex  the index to finish iterating at.
+     * @param array  The array to iterate over.
+     * @param startIndex  The index to start iterating at.
+     * @param endIndex  The index to finish iterating at.
      * @throws IllegalArgumentException if {@code array} is not an array.
      * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if either index is invalid
@@ -105,9 +106,9 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Checks whether the index is valid or not.
      *
-     * @param bound  the index to check
-     * @param len  the length of the array
-     * @param type  the index type (for error messages)
+     * @param bound  The index to check
+     * @param len  The length of the array
+     * @param type  The index type (for error messages)
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     protected void checkBound(final int bound, final int len, final String type) {
@@ -122,7 +123,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the array that this iterator is iterating over.
      *
-     * @return the array this iterator iterates over.
+     * @return The array this iterator iterates over.
      */
     public Object getArray() {
         return array;
@@ -131,7 +132,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the end index to loop to.
      *
-     * @return the end index
+     * @return The end index
      * @since 4.0
      */
     public int getEndIndex() {
@@ -141,7 +142,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the start index to loop from.
      *
-     * @return the start index
+     * @return The start index
      * @since 4.0
      */
     public int getStartIndex() {
@@ -161,7 +162,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Returns the next element in the array.
      *
-     * @return the next element in the array
+     * @return The next element in the array
      * @throws NoSuchElementException if all the elements in the array
      *  have already been returned
      */
@@ -175,9 +176,9 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Throws {@link UnsupportedOperationException}.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @throws UnsupportedOperationException always
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void remove() {

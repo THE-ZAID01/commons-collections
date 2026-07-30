@@ -18,6 +18,7 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.InvalidObjectException;
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,12 +34,14 @@ import java.util.Map;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for ReferenceIdentityMap.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -269,6 +273,18 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertTrue(map.containsValue(I2B));
     }
 
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractReferenceMap.doReadObject
+     * (its own override) must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final ReferenceIdentityMap<K, V> map = new ReferenceIdentityMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     void testHashEntry() {
@@ -282,9 +298,9 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         final Map.Entry<K, V> entry2 = it.next();
         final Map.Entry<K, V> entry3 = it.next();
 
-        assertTrue(entry1.equals(entry2));
-        assertTrue(entry2.equals(entry1));
-        assertFalse(entry1.equals(entry3));
+        assertEquals(entry1, entry2);
+        assertEquals(entry2, entry1);
+        assertNotEquals(entry1, entry3);
     }
 
     @Test

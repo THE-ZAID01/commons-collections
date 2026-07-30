@@ -35,7 +35,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * implementations will throw a ConcurrentModificationException.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.0
  */
 public class LoopingIterator<E> implements ResettableIterator<E> {
@@ -53,7 +53,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * the original source, so the Collection must be passed in.
      * </p>
      *
-     * @param collection  the collection to wrap
+     * @param collection  The collection to wrap
      * @throws NullPointerException if the collection is null
      */
     public LoopingIterator(final Collection<? extends E> collection) {
@@ -81,7 +81,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * If at the end of the collection, return the first element.
      * </p>
      *
-     * @return the next object
+     * @return The next object
      * @throws NoSuchElementException if there are no elements
      *         at all.  Use {@link #hasNext} to avoid this error.
      */
@@ -126,7 +126,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the size of the collection underlying the iterator.
      *
-     * @return the current collection size
+     * @return The current collection size
      */
     public int size() {
         return collection.size();

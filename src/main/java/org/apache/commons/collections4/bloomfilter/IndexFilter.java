@@ -42,7 +42,7 @@ public final class IndexFilter {
         /**
          * Constructs the tracker based on the shape.
          *
-         * @param shape the shape to build the tracker for.
+         * @param shape The shape to build the tracker for.
          */
         ArrayTracker(final Shape shape) {
             seen = new int[shape.getNumberOfHashFunctions()];
@@ -92,7 +92,7 @@ public final class IndexFilter {
      *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
-     * @return an IndexFilter optimized for the specified shape.
+     * @return An IndexFilter optimized for the specified shape.
      */
     public static IntPredicate create(final Shape shape, final IntPredicate consumer) {
         return new IndexFilter(shape, consumer)::test;
@@ -128,7 +128,7 @@ public final class IndexFilter {
      *
      * <p><em>If the input is not in the range [0,size) an IndexOutOfBoundsException exception is thrown.</em></p>
      *
-     * @param number the number to check.
+     * @param number The number to check.
      * @return {@code true} if processing should continue, {@code false} otherwise.
      */
     public boolean test(final int number) {

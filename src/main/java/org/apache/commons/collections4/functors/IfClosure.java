@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * Closure implementation acts as an if statement calling one or other closure
  * based on a predicate.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class IfClosure<T> implements Closure<T>, Serializable {
@@ -39,11 +39,12 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * <p>
      * This factory creates a closure that performs no action when
      * the predicate is false.
+     * </p>
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
-     * @return the {@code if} closure
+     * @return The {@code if} closure
      * @throws NullPointerException if either argument is null
      * @since 3.2
      */
@@ -54,11 +55,11 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Factory method that performs validation.
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @param falseClosure  closure used if false
-     * @return the {@code if} closure
+     * @return The {@code if} closure
      * @throws NullPointerException if any argument is null
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
@@ -84,6 +85,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * <p>
      * This constructor creates a closure that performs no action when
      * the predicate is false.
+     * </p>
      *
      * @param predicate  predicate to switch on, not null
      * @param trueClosure  closure used if true, not null
@@ -111,7 +113,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Executes the true or false closure according to the result of the predicate.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {
@@ -125,7 +127,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the closure called when false.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getFalseClosure() {
@@ -135,7 +137,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the predicate.
      *
-     * @return the predicate
+     * @return The predicate
      * @since 3.1
      */
     public Predicate<? super T> getPredicate() {
@@ -145,7 +147,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the closure called when true.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getTrueClosure() {

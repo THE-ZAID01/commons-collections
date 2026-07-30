@@ -33,9 +33,9 @@ final class IndexUtils {
     /**
      * Ensure the array can add an element at the specified index.
      *
-     * @param array the array to check.
-     * @param index the index to add at.
-     * @return the array or a newly allocated copy of the array.
+     * @param array The array to check.
+     * @param index The index to add at.
+     * @return The array or a newly allocated copy of the array.
      */
     static int[] ensureCapacityForAdd(final int[] array, final int index) {
         if (index >= array.length) {

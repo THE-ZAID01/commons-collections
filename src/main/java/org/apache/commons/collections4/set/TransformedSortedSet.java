@@ -33,7 +33,7 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.0
  */
 public class TransformedSortedSet<E> extends TransformedSet<E> implements SortedSet<E> {
@@ -49,10 +49,10 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedSet(SortedSet, Transformer)}.
      *
-     * @param <E> the element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed {@link SortedSet}
+     * @param <E> The element type
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
+     * @return A new transformed {@link SortedSet}
      * @throws NullPointerException if set or transformer is null
      * @since 4.0
      */
@@ -78,10 +78,10 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * are NOT transformed.
      * Contrast this with {@link #transformedSortedSet(SortedSet, Transformer)}.
      *
-     * @param <E> the element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed {@link SortedSet}
+     * @param <E> The element type
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
+     * @return A new transformed {@link SortedSet}
      * @throws NullPointerException if set or transformer is null
      * @since 4.0
      */
@@ -96,8 +96,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
      *
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if set or transformer is null
      */
     protected TransformedSortedSet(final SortedSet<E> set, final Transformer<? super E, ? extends E> transformer) {
@@ -117,7 +117,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     /**
      * Gets the decorated set.
      *
-     * @return the decorated set
+     * @return The decorated set
      */
     protected SortedSet<E> getSortedSet() {
         return (SortedSet<E>) decorated();

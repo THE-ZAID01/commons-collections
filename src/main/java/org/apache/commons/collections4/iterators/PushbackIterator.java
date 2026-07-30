@@ -32,7 +32,7 @@ import java.util.Objects;
  * result in an {@link UnsupportedOperationException}.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.0
  */
 public class PushbackIterator<E> implements Iterator<E> {
@@ -44,8 +44,8 @@ public class PushbackIterator<E> implements Iterator<E> {
      * </p>
      *
      * @param <E>  the element type
-     * @param iterator  the iterator to decorate
-     * @return a new peeking iterator
+     * @param iterator  The iterator to decorate
+     * @return A new peeking iterator
      * @throws NullPointerException if the iterator is null
      */
     public static <E> PushbackIterator<E> pushbackIterator(final Iterator<? extends E> iterator) {
@@ -67,7 +67,7 @@ public class PushbackIterator<E> implements Iterator<E> {
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      */
     public PushbackIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -89,16 +89,16 @@ public class PushbackIterator<E> implements Iterator<E> {
      * Calling {@link #next()} immediately afterwards will return exactly this element.
      * </p>
      *
-     * @param item  the element to push back to the iterator
+     * @param item  The element to push back to the iterator
      */
     public void pushback(final E item) {
         items.push(item);
     }
 
     /**
-     * This iterator will always throw an {@link UnsupportedOperationException}.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @throws UnsupportedOperationException always
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void remove() {

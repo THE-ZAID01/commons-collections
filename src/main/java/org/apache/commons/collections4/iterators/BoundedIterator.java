@@ -34,7 +34,7 @@ import java.util.Objects;
  * before that position.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.1
  */
 public class BoundedIterator<E> implements Iterator<E> {
@@ -59,9 +59,9 @@ public class BoundedIterator<E> implements Iterator<E> {
      * incurring O(n) time.
      * </p>
      *
-     * @param iterator  the iterator to be decorated
-     * @param offset  the index of the first element of the decorated iterator to return
-     * @param max  the maximum number of elements of the decorated iterator to return
+     * @param iterator  The iterator to be decorated
+     * @param offset  The index of the first element of the decorated iterator to return
+     * @param max  The maximum number of elements of the decorated iterator to return
      * @throws NullPointerException if iterator is null
      * @throws IllegalArgumentException if either offset or max is negative
      */

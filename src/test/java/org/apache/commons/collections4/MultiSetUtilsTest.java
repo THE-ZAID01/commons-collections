@@ -17,11 +17,14 @@
 package org.apache.commons.collections4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
 import org.apache.commons.collections4.multiset.HashMultiSet;
+import org.apache.commons.collections4.multiset.TreeMultiSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +42,27 @@ class MultiSetUtilsTest {
             "a", "a", "b", "c", "d", "d", "d"
         };
         multiSet = new HashMultiSet<>(Arrays.asList(fullArray));
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#containsOccurrences(MultiSet, MultiSet)}.
+     */
+    @Test
+    void testContainsOccurrences() {
+        assertTrue(MultiSetUtils.containsOccurrences(multiSet, new HashMultiSet<>()));
+        assertTrue(MultiSetUtils.containsOccurrences(multiSet, new HashMultiSet<>(Arrays.asList("a", "a", "d"))));
+        assertTrue(MultiSetUtils.containsOccurrences(multiSet, multiSet));
+
+        assertFalse(MultiSetUtils.containsOccurrences(multiSet, new HashMultiSet<>(Arrays.asList("b", "b"))),
+                "Only one occurrence of 'b' is present");
+        assertFalse(MultiSetUtils.containsOccurrences(multiSet, new HashMultiSet<>(Arrays.asList("e"))),
+                "'e' is not present");
+        assertFalse(MultiSetUtils.containsOccurrences(new HashMultiSet<>(), multiSet));
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.containsOccurrences(null, multiSet),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.containsOccurrences(multiSet, null),
+                "Expecting NPE");
     }
 
     /**
@@ -74,6 +98,60 @@ class MultiSetUtilsTest {
     }
 
     /**
+     * Tests {@link MultiSetUtils#removeOccurrences(MultiSet, MultiSet)}.
+     */
+    @Test
+    void testRemoveOccurrences() {
+        assertFalse(MultiSetUtils.removeOccurrences(multiSet, new HashMultiSet<>()));
+        assertFalse(MultiSetUtils.removeOccurrences(multiSet, new HashMultiSet<>(Arrays.asList("e"))),
+                "'e' is not present, so nothing changes");
+
+        assertTrue(MultiSetUtils.removeOccurrences(multiSet, new HashMultiSet<>(Arrays.asList("a", "d", "d", "d", "d"))));
+        assertEquals(1, multiSet.getCount("a"), "One occurrence of 'a' should remain");
+        assertEquals(0, multiSet.getCount("d"), "Removing more copies than present empties 'd'");
+        assertEquals(1, multiSet.getCount("b"));
+        assertEquals(1, multiSet.getCount("c"));
+
+        assertTrue(MultiSetUtils.removeOccurrences(multiSet, multiSet), "Removing itself clears the multiset");
+        assertEquals(0, multiSet.size());
+        assertFalse(MultiSetUtils.removeOccurrences(multiSet, multiSet), "Empty multiset is unchanged");
+
+        multiSet.addAll(Arrays.asList(fullArray));
+        assertTrue(MultiSetUtils.removeOccurrences(multiSet, MultiSetUtils.unmodifiableMultiSet(multiSet)),
+                "Removing a view of itself clears the multiset");
+        assertEquals(0, multiSet.size());
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.removeOccurrences(null, multiSet),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.removeOccurrences(multiSet, null),
+                "Expecting NPE");
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#retainOccurrences(MultiSet, MultiSet)}.
+     */
+    @Test
+    void testRetainOccurrences() {
+        assertFalse(MultiSetUtils.retainOccurrences(multiSet, multiSet), "Retaining itself changes nothing");
+        assertFalse(MultiSetUtils.retainOccurrences(multiSet, new HashMultiSet<>(Arrays.asList(fullArray))),
+                "Retaining an equal multiset changes nothing");
+
+        assertTrue(MultiSetUtils.retainOccurrences(multiSet, new HashMultiSet<>(Arrays.asList("a", "d", "d", "e"))));
+        assertEquals(1, multiSet.getCount("a"), "Only one occurrence of 'a' should be retained");
+        assertEquals(2, multiSet.getCount("d"), "Only two occurrences of 'd' should be retained");
+        assertEquals(0, multiSet.getCount("b"), "'b' should be removed entirely");
+        assertEquals(0, multiSet.getCount("c"), "'c' should be removed entirely");
+
+        assertTrue(MultiSetUtils.retainOccurrences(multiSet, new HashMultiSet<>()), "Retaining nothing clears the multiset");
+        assertEquals(0, multiSet.size());
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.retainOccurrences(null, multiSet),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.retainOccurrences(multiSet, null),
+                "Expecting NPE");
+    }
+
+    /**
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
     @Test
@@ -81,6 +159,40 @@ class MultiSetUtilsTest {
         final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
         assertEquals(multiSet, synced);
         synced.add("a"); // ensure adding works
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#transformingMultiSet(MultiSet, org.apache.commons.collections4.Transformer)}.
+     */
+    @Test
+    void testTransformingMultiSet() {
+        final MultiSet<String> transformed = MultiSetUtils.transformingMultiSet(new HashMultiSet<>(), String::toUpperCase);
+        transformed.add("a");
+        assertEquals(1, transformed.getCount("A"));
+        assertEquals(0, transformed.getCount("a"));
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.<String>transformingMultiSet(null, String::toUpperCase),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.transformingMultiSet(multiSet, null),
+                "Expecting NPE");
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#transformingSortedMultiSet(SortedMultiSet, org.apache.commons.collections4.Transformer)}.
+     */
+    @Test
+    void testTransformingSortedMultiSet() {
+        final SortedMultiSet<String> transformed = MultiSetUtils.transformingSortedMultiSet(new TreeMultiSet<>(), String::toUpperCase);
+        transformed.add("b");
+        transformed.add("a");
+        assertEquals(2, transformed.size());
+        assertEquals("A", transformed.first());
+        assertEquals("B", transformed.last());
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.<String>transformingSortedMultiSet(null, String::toUpperCase),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.transformingSortedMultiSet(new TreeMultiSet<>(), null),
+                "Expecting NPE");
     }
 
     /**

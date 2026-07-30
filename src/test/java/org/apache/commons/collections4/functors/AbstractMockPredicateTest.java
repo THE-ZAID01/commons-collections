@@ -46,7 +46,7 @@ public abstract class AbstractMockPredicateTest<T> {
     /**
      * Creates a new {@code PredicateTestBase}.
      *
-     * @param testValue the value to pass to mock predicates.
+     * @param testValue The value to pass to mock predicates.
      */
     protected AbstractMockPredicateTest(final T testValue) {
         this.testValue = testValue;
@@ -55,8 +55,8 @@ public abstract class AbstractMockPredicateTest<T> {
     /**
      * Creates a single mock predicate.
      *
-     * @param returnValue the return value for the mock predicate, or null if the mock is not expected to be called.
-     * @return a single mock predicate.
+     * @param returnValue The return value for the mock predicate, or null if the mock is not expected to be called.
+     * @return A single mock predicate.
      */
     @SuppressWarnings({"boxing"})
     protected final Predicate<T> createMockPredicate(final Boolean returnValue) {
@@ -81,7 +81,7 @@ public abstract class AbstractMockPredicateTest<T> {
     /**
      * Gets the value which will be passed to the mock predicates.
      *
-     * @return the test value.
+     * @return The test value.
      */
     protected final T getTestValue() {
         return testValue;

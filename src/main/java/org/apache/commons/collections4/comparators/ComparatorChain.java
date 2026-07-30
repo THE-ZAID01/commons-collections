@@ -48,7 +48,7 @@ import java.util.Objects;
  * multiple comparisons after all the setup operations are complete.
  * </p>
  *
- * @param <E> the type of objects compared by this comparator
+ * @param <E> The type of objects compared by this comparator
  * @since 2.0
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {
@@ -186,8 +186,8 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Perform comparisons on the Objects as per
      * Comparator.compare(o1, o2).
      *
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
+     * @param o1  The first object to compare
+     * @param o2  The second object to compare
      * @return -1, 0, or 1
      * @throws UnsupportedOperationException if the ComparatorChain does not contain at least one Comparator
      */
@@ -233,7 +233,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Subclasses may want to override this behavior to remain consistent
      * with the {@link Comparator#equals(Object)} contract.
      *
-     * @param object  the object to compare with
+     * @param object  The object to compare with
      * @return true if equal
      * @since 3.0
      */
@@ -242,7 +242,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         if (this == object) {
             return true;
         }
-        if (null == object) {
+        if (object == null) {
             return false;
         }
         if (object.getClass().equals(this.getClass())) {
@@ -257,16 +257,16 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
      *
-     * @return a suitable hash code
+     * @return A suitable hash code
      * @since 3.0
      */
     @Override
     public int hashCode() {
         int hash = 0;
-        if (null != comparatorChain) {
+        if (comparatorChain != null) {
             hash ^= comparatorChain.hashCode();
         }
-        if (null != orderingBits) {
+        if (orderingBits != null) {
             hash ^= orderingBits.hashCode();
         }
         return hash;

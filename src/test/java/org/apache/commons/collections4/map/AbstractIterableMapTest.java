@@ -26,16 +26,18 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link IterableMap}.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<IterableMap<K, V>, K, V> {
 
+    @Nested
     public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
 
         @Override

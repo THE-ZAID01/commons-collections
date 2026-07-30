@@ -51,9 +51,9 @@ final class FunctorUtils {
      * suppression.
      * </p>
      *
-     * @param <T> the type of object the returned predicate should "accept"
-     * @param predicate the predicate to coerce.
-     * @return the coerced predicate.
+     * @param <T> The type of object the returned predicate should "accept"
+     * @param predicate The predicate to coerce.
+     * @return The coerced predicate.
      */
     @SuppressWarnings("unchecked")
     static <R extends java.util.function.Predicate<T>, P extends java.util.function.Predicate<? super T>, T> R coerce(final P predicate) {
@@ -68,10 +68,10 @@ final class FunctorUtils {
      * suppression.
      * </p>
      *
-     * @param <I> the type of object the returned transformer should "accept"
-     * @param <O> the type of object the returned transformer should "produce"
-     * @param transformer the transformer to coerce.
-     * @return the coerced transformer.
+     * @param <I> The type of object the returned transformer should "accept"
+     * @param <O> The type of object the returned transformer should "produce"
+     * @param transformer The transformer to coerce.
+     * @return The coerced transformer.
      */
     @SuppressWarnings("unchecked")
     static <R extends Function<I, O>, P extends Function<? super I, ? extends O>, I, O> R coerce(final P transformer) {
@@ -81,8 +81,8 @@ final class FunctorUtils {
     /**
      * Clones the consumers to ensure that the internal references can't be updated.
      *
-     * @param consumers  the consumers to copy.
-     * @return the cloned consumers.
+     * @param consumers  The consumers to copy.
+     * @return The cloned consumers.
      */
     @SuppressWarnings("unchecked")
     static <T extends Consumer<?>> T[] copy(final T... consumers) {
@@ -94,8 +94,8 @@ final class FunctorUtils {
      * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
      * able to be coerced to Predicate<T> without casting issues.
      *
-     * @param predicates  the predicates to copy
-     * @return the cloned predicates
+     * @param predicates  The predicates to copy
+     * @return The cloned predicates
      */
     @SuppressWarnings("unchecked")
     static <T extends java.util.function.Predicate<?>> T[] copy(final T... predicates) {
@@ -105,8 +105,8 @@ final class FunctorUtils {
     /**
      * Copy method.
      *
-     * @param transformers  the transformers to copy
-     * @return a clone of the transformers
+     * @param transformers  The transformers to copy
+     * @return A clone of the transformers
      */
     @SuppressWarnings("unchecked")
     static <T extends Function<?, ?>> T[] copy(final T... transformers) {
@@ -116,7 +116,7 @@ final class FunctorUtils {
     /**
      * Validate the predicates to ensure that all is well.
      *
-     * @param predicates  the predicates to validate
+     * @param predicates  The predicates to validate
      * @return predicate array
      */
     static <T> Predicate<? super T>[] validate(final Collection<? extends java.util.function.Predicate<? super T>> predicates) {
@@ -138,7 +138,7 @@ final class FunctorUtils {
     /**
      * Validates the consumers to ensure that all is well.
      *
-     * @param consumers  the consumers to validate.
+     * @param consumers  The consumers to validate.
      */
     static void validate(final Consumer<?>... consumers) {
         Objects.requireNonNull(consumers, "consumers");
@@ -152,7 +152,7 @@ final class FunctorUtils {
     /**
      * Validate method
      *
-     * @param functions  the transformers to validate
+     * @param functions  The transformers to validate
      */
     static void validate(final Function<?, ?>... functions) {
         Objects.requireNonNull(functions, "functions");
@@ -166,7 +166,7 @@ final class FunctorUtils {
     /**
      * Validate the predicates to ensure that all is well.
      *
-     * @param predicates  the predicates to validate
+     * @param predicates  The predicates to validate
      */
     static void validate(final java.util.function.Predicate<?>... predicates) {
         Objects.requireNonNull(predicates, "predicates");

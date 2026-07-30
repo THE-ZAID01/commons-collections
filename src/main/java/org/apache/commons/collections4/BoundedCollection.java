@@ -28,7 +28,7 @@ import java.util.Collection;
  *
  * @see CollectionUtils#isFull
  * @see CollectionUtils#maxSize
- * @param <E> the type of elements in this collection
+ * @param <E> The type of elements in this collection
  * @since 3.0
  */
 public interface BoundedCollection<E> extends Collection<E> {
@@ -43,7 +43,7 @@ public interface BoundedCollection<E> extends Collection<E> {
     /**
      * Gets the maximum size of the collection (the bound).
      *
-     * @return the maximum number of elements the collection can hold.
+     * @return The maximum number of elements the collection can hold.
      */
     int maxSize();
 

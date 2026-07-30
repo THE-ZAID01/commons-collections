@@ -53,7 +53,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for MapUtils.
+ * Tests {@link MapUtils}.
  */
 @SuppressWarnings("boxing")
 class MapUtilsTest {
@@ -482,11 +482,13 @@ class MapUtilsTest {
     void testGetIntValue() {
         final Map<String, Integer> in = new HashMap<>();
         in.put("key", 2);
+        in.put("big", 1000);
 
         assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
         assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
+        assertEquals(1000, MapUtils.getIntValue(in, "big", key -> 0), 0);
+        assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", key -> Integer.MAX_VALUE), 0);
         assertEquals(Integer.MIN_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MIN_VALUE), 0);
         assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
@@ -587,7 +589,7 @@ class MapUtilsTest {
         assertEquals(val, MapUtils.getShortValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
         assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> val), 0);
+        assertEquals(1000, MapUtils.getShortValue(in, "noKey", key -> (short) 1000), 0);
         assertEquals(Short.MIN_VALUE, MapUtils.getShortValue(in, "noKey", Short.MIN_VALUE), 0);
         assertEquals(Short.MAX_VALUE, MapUtils.getShortValue(in, "noKey", Short.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);
@@ -633,11 +635,10 @@ class MapUtilsTest {
 
     private void testInvertMap(final Map<String, String> in) {
         // setup
-        in.put("1", "A");
-        in.put("2", "B");
-        in.put("3", "C");
-        in.put("4", "D");
-        in.put("5", "E");
+        final int entryCount = 32;
+        for (int i = 1; i <= entryCount; i++) {
+            in.put(String.valueOf(i), String.valueOf((char) ('A' + i - 1)));
+        }
         final Set<String> inKeySet = new HashSet<>(in.keySet());
         final Set<String> inValSet = new HashSet<>(in.values());
         // invert
@@ -647,11 +648,9 @@ class MapUtilsTest {
         final Set<String> outValSet = new HashSet<>(out.values());
         assertEquals(inKeySet, outValSet);
         assertEquals(inValSet, outKeySet);
-        assertEquals("1", out.get("A"));
-        assertEquals("2", out.get("B"));
-        assertEquals("3", out.get("C"));
-        assertEquals("4", out.get("D"));
-        assertEquals("5", out.get("E"));
+        for (int i = 1; i <= entryCount; i++) {
+            assertEquals(String.valueOf((char) ('A' + i - 1)), in.get(String.valueOf(i)));
+        }
     }
 
     @Test

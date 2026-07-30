@@ -75,17 +75,17 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates an empty version of the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
-     * @return a BloomFilter implementation.
+     * @param shape The shape of the filter.
+     * @return A BloomFilter implementation.
      */
     protected abstract T createEmptyFilter(Shape shape);
 
     /**
      * Creates the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
+     * @param shape The shape of the filter.
      * @param extractor A BitMap extractor to build the filter with.
-     * @return a BloomFilter implementation.
+     * @return A BloomFilter implementation.
      */
     protected final T createFilter(final Shape shape, final BitMapExtractor extractor) {
         final T bf = createEmptyFilter(shape);
@@ -96,9 +96,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
-     * @param hasher the hasher to use to create the filter.
-     * @return a BloomFilter implementation.
+     * @param shape The shape of the filter.
+     * @param hasher The hasher to use to create the filter.
+     * @return A BloomFilter implementation.
      */
     protected final T createFilter(final Shape shape, final Hasher hasher) {
         final T bf = createEmptyFilter(shape);
@@ -109,9 +109,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
+     * @param shape The shape of the filter.
      * @param extractor An Index extractor to build the filter with.
-     * @return a BloomFilter implementation.
+     * @return A BloomFilter implementation.
      */
     protected final T createFilter(final Shape shape, final IndexExtractor extractor) {
         final T bf = createEmptyFilter(shape);
@@ -125,7 +125,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      *  <li>Hash functions (k) = 17
      *  <li>Number of bits (m) = 72
      * </ul>
-     * @return the testing shape.
+     * @return The testing shape.
      */
     protected Shape getTestShape() {
         return Shape.fromKM(17, 72);

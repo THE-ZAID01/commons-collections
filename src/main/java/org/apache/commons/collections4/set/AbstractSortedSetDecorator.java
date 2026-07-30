@@ -26,7 +26,7 @@ import java.util.SortedSet;
  * Methods are forwarded directly to the decorated set.
  * </p>
  *
- * @param <E> the type of the elements in the sorted set
+ * @param <E> The type of the elements in the sorted set
  * @since 3.0
  */
 public abstract class AbstractSortedSetDecorator<E>
@@ -47,7 +47,7 @@ public abstract class AbstractSortedSetDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     protected AbstractSortedSetDecorator(final Set<E> set) {
@@ -62,7 +62,7 @@ public abstract class AbstractSortedSetDecorator<E>
     /**
      * Gets the set being decorated.
      *
-     * @return the decorated set
+     * @return The decorated set
      */
     @Override
     protected SortedSet<E> decorated() {

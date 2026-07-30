@@ -58,7 +58,7 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
     /**
      * Adds the index to the indices.
      *
-     * @param idx the index to add.
+     * @param idx The index to add.
      * @return {@code true} always
      */
     private boolean add(final int idx) {
@@ -103,7 +103,7 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
     /**
      * Creates a new instance of this {@link SparseBloomFilter} with the same properties as the current one.
      *
-     * @return a copy of this {@link SparseBloomFilter}.
+     * @return A copy of this {@link SparseBloomFilter}.
      */
     @Override
     public SparseBloomFilter copy() {

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.TreeMap;
+import java.util.function.BiPredicate;
 import java.util.function.IntPredicate;
 
 /**
@@ -47,7 +48,7 @@ public interface CellExtractor extends IndexExtractor {
      * Returns {@code true} if processing should continue, {@code false} otherwise.
      *
      * <p>Note: This is a functional interface as a specialization of
-     * {@link java.util.function.BiPredicate} for {@code int}.</p>
+     * {@link BiPredicate} for {@code int}.</p>
      */
     @FunctionalInterface
     interface CellPredicate {
@@ -55,8 +56,8 @@ public interface CellExtractor extends IndexExtractor {
         /**
          * Performs an operation on the given {@code <index, count>} pair.
          *
-         * @param index the bit index.
-         * @param count the cell value at the specified bit index.
+         * @param index The bit index.
+         * @param count The cell value at the specified bit index.
          * @return {@code true} if processing should continue, {@code false} if processing should stop.
          */
         boolean test(int index, int count);
@@ -150,7 +151,7 @@ public interface CellExtractor extends IndexExtractor {
      * cell. If the consumer returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further pairs are processed.</p>
      *
-     * @param consumer the action to be performed for each non-zero cell.
+     * @param consumer The action to be performed for each non-zero cell.
      * @return {@code true} if all cells return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */

@@ -44,20 +44,17 @@ class SplitMapUtilsTest {
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
     private void attemptGetOperation(final Runnable r) {
-        assertThrows(UnsupportedOperationException.class, () -> r.run(),
-                "Put exposed as writable Map must not allow Get operations");
+        assertThrows(UnsupportedOperationException.class, r::run, "Put exposed as writable Map must not allow Get operations");
     }
 
     private void attemptPutOperation(final Runnable r) {
-        assertThrows(UnsupportedOperationException.class, () -> r.run(),
-                "Get exposed as writable Map must not allow Put operations");
+        assertThrows(UnsupportedOperationException.class, r::run, "Get exposed as writable Map must not allow Put operations");
     }
 
     @BeforeEach
     public void setUp() throws Exception {
         backingMap = new HashMap<>();
-        transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String>nopTransformer(),
-                stringToInt);
+        transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String>nopTransformer(), stringToInt);
         for (int i = 0; i < 10; i++) {
             transformedMap.put(String.valueOf(i), String.valueOf(i));
         }
@@ -97,7 +94,7 @@ class SplitMapUtilsTest {
         assertInstanceOf(Unmodifiable.class, map);
 
         // check individual operations
-        int sz = map.size();
+        final int sz = map.size();
 
         attemptPutOperation(map::clear);
 
@@ -116,12 +113,15 @@ class SplitMapUtilsTest {
         assertEquals(other, map);
         assertEquals(other.hashCode(), map.hashCode());
 
-        // remove
-        for (int i = 0; i < 10; i++) {
-            assertEquals(i, map.remove(String.valueOf(i)).intValue());
-            assertEquals(--sz, map.size());
-        }
-        assertTrue(map.isEmpty());
+        // remove, and the Map default methods that route through it
+        attemptPutOperation(() -> map.remove("0"));
+        attemptPutOperation(() -> map.remove("1", 1));
+        attemptPutOperation(() -> map.computeIfPresent("2", (k, v) -> null));
+        attemptPutOperation(() -> map.compute("3", (k, v) -> null));
+        attemptPutOperation(() -> map.merge("4", 4, (a, b) -> null));
+
+        assertEquals(sz, map.size());
+        assertEquals(sz, backingMap.size());
         assertSame(map, SplitMapUtils.readableMap(map));
     }
 

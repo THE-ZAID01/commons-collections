@@ -35,7 +35,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.Queue}.
+ * Tests {@link Queue}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.
@@ -50,7 +50,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns the {@link #collection} field cast to a {@link Queue}.
      *
-     * @return the collection field as a Queue
+     * @return The collection field as a Queue
      */
     @Override
     public Queue<E> getCollection() {
@@ -98,7 +98,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns {@link #makeObject()}.
      *
-     * @return an empty queue to be used for testing
+     * @return An empty queue to be used for testing
      */
     @Override
     public abstract Queue<E> makeObject();

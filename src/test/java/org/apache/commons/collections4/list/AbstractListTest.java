@@ -42,7 +42,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.List}.
+ * Tests {@link List}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.
@@ -54,7 +54,7 @@ import org.junit.jupiter.api.Test;
  * protected methods from AbstractCollectionTest.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator
+ * @param <E> The type of elements returned by this iterator
  */
 public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
@@ -131,11 +131,11 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    public class ListIteratorTest extends AbstractListIteratorTest<E> {
+    public abstract class ListIteratorTest extends AbstractListIteratorTest<E> {
 
         @Override
         public E addSetValue() {
-            return getOtherElements()[0];
+            return getListIteratorAddSetValue();
         }
 
         @Override
@@ -162,15 +162,15 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         @Override
         public boolean supportsSet() {
-            return AbstractListTest.this.isSetSupported();
+            return isListIteratorSetSupported();
         }
     }
 
     /**
      * Traverses to the beginning of the given iterator.
      *
-     * @param iter  the iterator to traverse
-     * @param i     the starting index
+     * @param iter  The iterator to traverse
+     * @param i     The starting index
      */
     private void backwardTest(final ListIterator<E> iter, int i) {
         final List<E> list = getCollection();
@@ -199,7 +199,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     public BulkTest bulkTestListIterator() {
-        return new ListIteratorTest();
+        return new ListIteratorTest() {
+        };
     }
 
     /**
@@ -221,7 +222,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Invokes all the methods on the given sublist to make sure they raise
-     * a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
+     * a {@link ConcurrentModificationException ConcurrentModificationException}.
      */
     protected void failFastAll(final List<E> list) {
         final Method[] methods = List.class.getMethods();
@@ -232,15 +233,15 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Invokes the given method on the given sublist to make sure it raises
-     * a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
+     * a {@link ConcurrentModificationException ConcurrentModificationException}.
      *
      * Unless the method happens to be the equals() method, in which case
      * the test is skipped. There seems to be a bug in
      * java.util.AbstractList.subList(int,int).equals(Object) -- it never
      * raises a ConcurrentModificationException.
      *
-     * @param list the sublist to test
-     * @param m the method to invoke
+     * @param list The sublist to test
+     * @param m The method to invoke
      */
     protected void failFastMethod(final List<E> list, final Method m) {
         if (m.getName().equals("equals")) {
@@ -273,8 +274,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Traverses to the end of the given iterator.
      *
-     * @param iter  the iterator to traverse
-     * @param i     the starting index
+     * @param iter  The iterator to traverse
+     * @param i     The starting index
      */
     private void forwardTest(final ListIterator<E> iter, int i) {
         final List<E> list = getCollection();
@@ -302,7 +303,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns the {@link #collection} field cast to a {@link List}.
      *
-     * @return the collection field as a List
+     * @return The collection field as a List
      */
     @Override
     public List<E> getCollection() {
@@ -312,11 +313,15 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns the {@link #confirmed} field cast to a {@link List}.
      *
-     * @return the confirmed field as a List
+     * @return The confirmed field as a List
      */
     @Override
     public List<E> getConfirmed() {
         return (List<E>) super.getConfirmed();
+    }
+
+    protected E getListIteratorAddSetValue() {
+        return getOtherElements()[0];
     }
 
     /**
@@ -325,6 +330,10 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     @Override
     public boolean isEqualsCheckable() {
         return true;
+    }
+
+    protected boolean isListIteratorSetSupported() {
+        return isSetSupported();
     }
 
     /**
@@ -368,7 +377,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns {@link #makeObject()}.
      *
-     * @return an empty list to be used for testing
+     * @return An empty list to be used for testing
      */
     @Override
     public abstract List<E> makeObject();
@@ -1094,7 +1103,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     * Tests that a sublist raises a {@link ConcurrentModificationException ConcurrentModificationException}
      * if elements are added to the original list.
      */
     @Test
@@ -1129,7 +1138,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     * Tests that a sublist raises a {@link ConcurrentModificationException ConcurrentModificationException}
      * if elements are removed from the original list.
      */
     @Test

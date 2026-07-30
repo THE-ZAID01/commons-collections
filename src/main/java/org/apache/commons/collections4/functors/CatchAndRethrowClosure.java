@@ -43,7 +43,7 @@ import org.apache.commons.collections4.FunctorException;
  * }
  * </pre>
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 4.0
  */
 public abstract class CatchAndRethrowClosure<T> implements Closure<T> {
@@ -58,7 +58,7 @@ public abstract class CatchAndRethrowClosure<T> implements Closure<T> {
     /**
      * Execute this closure on the specified input object.
      *
-     * @param input the input to execute on
+     * @param input The input to execute on
      * @throws FunctorException (runtime) if the closure execution resulted in a
      *             checked exception.
      */
@@ -76,7 +76,7 @@ public abstract class CatchAndRethrowClosure<T> implements Closure<T> {
     /**
      * Execute this closure on the specified input object.
      *
-     * @param input the input to execute on
+     * @param input The input to execute on
      * @throws Throwable if the closure execution resulted in a checked
      *             exception.
      */

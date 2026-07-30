@@ -27,6 +27,7 @@ import java.util.function.Predicate;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
+import org.apache.commons.collections4.multiset.UnmodifiableSortedMultiSet;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
@@ -38,9 +39,11 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link UnmodifiableSortedMultiSet} instead.
  */
+@Deprecated
 public final class UnmodifiableSortedBag<E>
         extends AbstractSortedBagDecorator<E> implements Unmodifiable {
 
@@ -52,9 +55,9 @@ public final class UnmodifiableSortedBag<E>
      * <p>
      * If the bag passed in is already unmodifiable, it is returned.
      *
-     * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @return an unmodifiable SortedBag
+     * @param <E> The type of the elements in the bag
+     * @param bag  The bag to decorate, must not be null
+     * @return An unmodifiable SortedBag
      * @throws NullPointerException if bag is null
      * @since 4.0
      */
@@ -68,28 +71,52 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     private UnmodifiableSortedBag(final SortedBag<E> bag) {
         super(bag);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @param count Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean add(final E object, final int count) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param coll Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -103,7 +130,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Deserializes the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
@@ -114,22 +141,45 @@ public final class UnmodifiableSortedBag<E>
         setCollection((Collection<E>) in.readObject());
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @param count Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean remove(final Object object, final int count) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param coll Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param filter Ignored.
+     * @throws UnsupportedOperationException Always thrown.
      * @since 4.4
      */
     @Override
@@ -137,6 +187,12 @@ public final class UnmodifiableSortedBag<E>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param coll Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
@@ -151,7 +207,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

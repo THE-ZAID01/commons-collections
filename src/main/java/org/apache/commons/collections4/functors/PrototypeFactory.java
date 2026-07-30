@@ -45,7 +45,7 @@ public class PrototypeFactory {
     /**
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
      *
-     * @param <T> the type of results supplied by this supplier.
+     * @param <T> The type of results supplied by this supplier.
      */
     static class PrototypeCloneFactory<T> implements Factory<T> {
 
@@ -66,7 +66,7 @@ public class PrototypeFactory {
         /**
          * Creates an object by calling the clone method.
          *
-         * @return the new object
+         * @return The new object
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -100,7 +100,7 @@ public class PrototypeFactory {
     /**
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
      *
-     * @param <T> the type of results supplied by this supplier.
+     * @param <T> The type of results supplied by this supplier.
      */
     static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T> {
 
@@ -117,7 +117,7 @@ public class PrototypeFactory {
         /**
          * Creates an object using serialization.
          *
-         * @return the new object
+         * @return The new object
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -166,8 +166,8 @@ public class PrototypeFactory {
      * </ul>
      *
      * @param <T>  the type the factory creates
-     * @param prototype  the object to clone each time in the factory
-     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
+     * @param prototype  The object to clone each time in the factory
+     * @return The {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
      * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */

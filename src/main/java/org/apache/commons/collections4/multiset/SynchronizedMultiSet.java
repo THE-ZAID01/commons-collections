@@ -29,7 +29,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * Iterators must be separately synchronized around the loop.
  * </p>
  *
- * @param <E> the type held in the multiset.
+ * @param <E> The type held in the multiset.
  * @since 4.1
  */
 public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implements MultiSet<E> {
@@ -37,7 +37,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     /**
      * Synchronized Set for the MultiSet class.
      *
-     * @param <T> the type held in this Set.
+     * @param <T> The type held in this Set.
      */
     static class SynchronizedSet<T> extends SynchronizedCollection<T> implements Set<T> {
 
@@ -47,8 +47,8 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         /**
          * Constructs a new instance.
          *
-         * @param set  the set to decorate
-         * @param lock  the lock to use, shared with the multiset
+         * @param set  The set to decorate
+         * @param lock  The lock to use, shared with the multiset
          */
         SynchronizedSet(final Set<T> set, final Object lock) {
             super(set, lock);
@@ -61,9 +61,9 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     /**
      * Factory method to create a synchronized multiset.
      *
-     * @param <E> the type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
-     * @return a new synchronized MultiSet
+     * @param <E> The type of the elements in the multiset
+     * @param multiset  The multiset to decorate, must not be null
+     * @return A new synchronized MultiSet
      * @throws NullPointerException if multiset is null
      */
     public static <E> SynchronizedMultiSet<E> synchronizedMultiSet(final MultiSet<E> multiset) {
@@ -73,7 +73,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     /**
      * Constructor that wraps (not copies).
      *
-     * @param multiset  the multiset to decorate, must not be null
+     * @param multiset  The multiset to decorate, must not be null
      * @throws NullPointerException if multiset is null
      */
     protected SynchronizedMultiSet(final MultiSet<E> multiset) {
@@ -83,8 +83,8 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     /**
      * Constructor that wraps (not copies).
      *
-     * @param multiset  the multiset to decorate, must not be null
-     * @param lock  the lock to use, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param lock  The lock to use, must not be null
      * @throws NullPointerException if multiset or lock is null
      */
     protected SynchronizedMultiSet(final MultiSet<E> multiset, final Object lock) {
@@ -101,7 +101,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     /**
      * Gets the multiset being decorated.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected MultiSet<E> decorated() {

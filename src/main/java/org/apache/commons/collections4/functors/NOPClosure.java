@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Closure;
 /**
  * Closure implementation that does nothing.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public final class NOPClosure<T> implements Closure<T>, Serializable {
@@ -38,8 +38,8 @@ public final class NOPClosure<T> implements Closure<T>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
-     * @param <E> the type that the closure acts on
-     * @return the singleton instance
+     * @param <E> The type that the closure acts on
+     * @return The singleton instance
      * @since 3.1
      */
     public static <E> Closure<E> nopClosure() {
@@ -55,7 +55,7 @@ public final class NOPClosure<T> implements Closure<T>, Serializable {
     /**
      * Do nothing.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {
@@ -65,7 +65,7 @@ public final class NOPClosure<T> implements Closure<T>, Serializable {
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

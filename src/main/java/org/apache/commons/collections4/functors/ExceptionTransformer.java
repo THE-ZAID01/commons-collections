@@ -24,8 +24,8 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that always throws an exception.
  *
- * @param <T> the type of the input to the function.
- * @param <R> the type of the result of the function.
+ * @param <T> The type of the input to the function.
+ * @param <R> The type of the result of the function.
  * @since 3.0
  */
 public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Serializable {
@@ -42,7 +42,7 @@ public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Seri
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <I, O> Transformer<I, O> exceptionTransformer() {
@@ -58,7 +58,7 @@ public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Seri
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;
@@ -67,7 +67,7 @@ public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Seri
     /**
      * Transforms the input to result by cloning it.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return never
      * @throws FunctorException always
      */

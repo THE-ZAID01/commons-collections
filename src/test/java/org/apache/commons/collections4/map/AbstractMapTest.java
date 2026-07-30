@@ -50,10 +50,11 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.Map}.
+ * Tests {@link Map}.
  * <p>
  * The forces at work here are similar to those in {@link AbstractCollectionTest}. If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the {@link #makeObject()} method.
@@ -132,12 +133,13 @@ import org.junit.jupiter.api.Test;
  * {@link #isAllowDuplicateValues()} and have it return {@code false}
  * </p>
  *
- * @param <M> the Map type.
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <M> The Map type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
+    @Nested
     public class MapEntrySetTest extends AbstractSetTest<Map.Entry<K, V>> {
 
         @Override
@@ -198,8 +200,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
         @Override
         public boolean isAddSupported() {
-            // Collection views don't support add operations.
-            return false;
+            return isEntrySetAddSupported();
         }
 
         public boolean isGetStructuralModify() {
@@ -323,6 +324,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         }
     }
 
+    @Nested
     public class MapKeySetTest extends AbstractSetTest<K> {
 
         @Override
@@ -400,6 +402,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     // to the confirmed, that the already-constructed collection views
     // are still equal to the confirmed's collection views.
 
+    @Nested
     public class MapValuesTest extends AbstractCollectionTest<V> {
 
         @Override
@@ -436,7 +439,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
         @Override
         public boolean isRemoveSupported() {
-            return AbstractMapTest.this.isRemoveSupported();
+            return isValuesRemoveSupported();
         }
 
         @Override
@@ -494,8 +497,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Creates a new Map Entry that is independent of the first and the map.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     public static <K, V> Map.Entry<K, V> cloneMapEntry(final Map.Entry<K, V> entry) {
         final HashMap<K, V> map = new HashMap<>();
@@ -552,7 +555,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Bulk test {@link Map#entrySet()}. This method runs through all of the tests in {@link AbstractSetTest}. After modification operations, {@link #verify()}
      * is invoked to ensure that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the map's entry set
+     * @return A {@link AbstractSetTest} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
         return new MapEntrySetTest();
@@ -562,7 +565,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Bulk test {@link Map#keySet()}. This method runs through all of the tests in {@link AbstractSetTest}. After modification operations, {@link #verify()} is
      * invoked to ensure that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the map's key set
+     * @return A {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMapKeySet() {
         return new MapKeySetTest();
@@ -572,7 +575,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Bulk test {@link Map#values()}. This method runs through all of the tests in {@link AbstractCollectionTest}. After modification operations,
      * {@link #verify()} is invoked to ensure that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's values collection
+     * @return A {@link AbstractCollectionTest} instance for testing the map's values collection
      */
     public BulkTest bulkTestMapValues() {
         return new MapValuesTest();
@@ -619,7 +622,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Return a flag specifying the iteration behavior of the collection. This is used to change the assertions used by specific tests. The default
      * implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behavior
+     * @return The iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
@@ -754,6 +757,15 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     }
 
     /**
+     * Returns true if the entry set view supports adding entries.
+     *
+     * @return false by default.
+     */
+    public boolean isEntrySetAddSupported() {
+        return false;
+    }
+
+    /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} provide fail-fast behavior on their various iterators.
      * <p>
      * Default implementation returns true. Override if your collection class does not support fast failure.
@@ -764,6 +776,11 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     public boolean isFailFastExpected() {
         return true;
     }
+
+    // tests begin here. Each test adds a little bit of tested functionality.
+    // Many methods assume previous methods passed. That is, they do not
+    // exhaustively recheck things that have already been checked in a previous
+    // test methods.
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} can cause structural modification on a get(). The example is
@@ -777,11 +794,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     public boolean isGetStructuralModify() {
         return false;
     }
-
-    // tests begin here. Each test adds a little bit of tested functionality.
-    // Many methods assume previous methods passed. That is, they do not
-    // exhaustively recheck things that have already been checked in a previous
-    // test methods.
 
     protected boolean isLazyMapTest() {
         return false;
@@ -859,9 +871,18 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     }
 
     /**
+     * Returns true if the values view supports removal operations.
+     *
+     * @return {@link #isRemoveSupported()} by default.
+     */
+    public boolean isValuesRemoveSupported() {
+        return isRemoveSupported();
+    }
+
+    /**
      * Override to return a map other than HashMap as the confirmed map.
      *
-     * @return a map that is known to be valid
+     * @return A map that is known to be valid
      */
     public Map<K, V> makeConfirmedMap() {
         return new HashMap<>();
@@ -870,9 +891,9 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Utility methods to create an array of Map.Entry objects out of the given key and value arrays.
      *
-     * @param keys   the array of keys
-     * @param values the array of values
-     * @return an array of Map.Entry of those keys to those values
+     * @param keys   The array of keys
+     * @param values The array of values
+     * @return An array of Map.Entry of those keys to those values
      */
     @SuppressWarnings("unchecked")
     private Map.Entry<K, V>[] makeEntryArray(final K[] keys, final V[] values) {
@@ -889,7 +910,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Return a new, populated map. The mappings in the map should match the keys and values returned from {@link #getSampleKeys()} and
      * {@link #getSampleValues()}. The default implementation uses makeEmptyMap() and calls {@link #addSampleMappings} to add all the mappings to the map.
      *
-     * @return the map to be tested
+     * @return The map to be tested
      */
     public M makeFullMap() {
         final M m = makeObject();
@@ -900,7 +921,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Return a new, empty {@link Map} to be used for testing.
      *
-     * @return the map to be tested
+     * @return The map to be tested
      */
     @Override
     public abstract M makeObject();
@@ -2240,7 +2261,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     @Test
     void testReplaceKeyValue() {
-        assumeTrue(isRemoveSupported());
+        assumeTrue(isPutChangeSupported());
         resetFull();
         final K[] sampleKeys = getSampleKeys();
         final V[] sampleValues = getSampleValues();
@@ -2274,7 +2295,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     @Test
     void testReplaceKeyValueValue() {
-        assumeTrue(isRemoveSupported());
+        assumeTrue(isPutChangeSupported());
         resetFull();
         final K[] sampleKeys = getSampleKeys();
         final V[] sampleValues = getSampleValues();

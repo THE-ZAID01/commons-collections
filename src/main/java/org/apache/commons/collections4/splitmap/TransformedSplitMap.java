@@ -23,9 +23,11 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.commons.collections4.Get;
 import org.apache.commons.collections4.Put;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.map.LinkedMap;
+import org.apache.commons.collections4.map.TransformedMap;
 
 /**
  * Decorates another {@link Map} to transform objects that are added.
@@ -45,22 +47,22 @@ import org.apache.commons.collections4.map.LinkedMap;
  * </p>
  * <p>
  * The "put" and "get" type constraints of this class are mutually independent;
- * contrast with {@link org.apache.commons.collections4.map.TransformedMap} which,
+ * contrast with {@link TransformedMap} which,
  * by virtue of its implementing {@link Map}&lt;K, V&gt;, must be constructed in such
  * a way that its read and write parameters are generalized to a common (super-)type.
  * In practice this would often mean {@code &gt;Object, Object&gt;}, defeating
  * much of the usefulness of having parameterized types.
  * </p>
  * <p>
- * On the downside, this class is not drop-in compatible with {@link java.util.Map}
+ * On the downside, this class is not drop-in compatible with {@link Map}
  * but is intended to be worked with either directly or by {@link Put} and
- * {@link org.apache.commons.collections4.Get Get} generalizations.
+ * {@link Get Get} generalizations.
  * </p>
  *
- * @param <J> the type of the keys to put in this map
- * @param <K> the type of the keys to get in this map
- * @param <U> the type of the values to put in this map
- * @param <V> the type of the values to get in this map
+ * @param <J> The type of the keys to put in this map
+ * @param <K> The type of the keys to get in this map
+ * @param <U> The type of the values to put in this map
+ * @param <V> The type of the values to get in this map
  * @since 4.0
  * @see org.apache.commons.collections4.SplitMapUtils#readableMap(org.apache.commons.collections4.Get)
  * @see org.apache.commons.collections4.SplitMapUtils#writableMap(Put)
@@ -81,10 +83,10 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * @param <K>  the output key type
      * @param <U>  the input value type
      * @param <V>  the output value type
-     * @param map the map to decorate, must not be null
-     * @param keyTransformer the transformer to use for key conversion, must not be null
-     * @param valueTransformer the transformer to use for value conversion, must not be null
-     * @return a new transformed map
+     * @param map The map to decorate, must not be null
+     * @param keyTransformer The transformer to use for key conversion, must not be null
+     * @param valueTransformer The transformer to use for value conversion, must not be null
+     * @return A new transformed map
      * @throws NullPointerException if map or either of the transformers is null
      */
     public static <J, K, U, V> TransformedSplitMap<J, K, U, V> transformingMap(final Map<K, V> map,
@@ -105,9 +107,9 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
      *
-     * @param map the map to decorate, must not be null
-     * @param keyTransformer the transformer to use for key conversion, must not be null
-     * @param valueTransformer the transformer to use for value conversion, must not be null
+     * @param map The map to decorate, must not be null
+     * @param keyTransformer The transformer to use for key conversion, must not be null
+     * @param valueTransformer The transformer to use for value conversion, must not be null
      * @throws NullPointerException if map or either of the transformers is null
      */
     protected TransformedSplitMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
@@ -120,8 +122,8 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /**
      * Override to transform the value when using {@code setValue}.
      *
-     * @param value the value to transform
-     * @return the transformed value
+     * @param value The value to transform
+     * @return The transformed value
      */
     protected V checkSetValue(final U value) {
         return valueTransformer.apply(value);
@@ -145,7 +147,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in the input stream
+     * @param in The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -161,8 +163,8 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param object the object to transform
-     * @return the transformed object
+     * @param object The object to transform
+     * @return The transformed object
      */
     protected K transformKey(final J object) {
         return keyTransformer.apply(object);
@@ -173,8 +175,8 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param map the map to transform
-     * @return the transformed object
+     * @param map The map to transform
+     * @return The transformed object
      */
     @SuppressWarnings("unchecked")
     protected Map<K, V> transformMap(final Map<? extends J, ? extends U> map) {
@@ -194,8 +196,8 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param object the object to transform
-     * @return the transformed object
+     * @param object The object to transform
+     * @return The transformed object
      */
     protected V transformValue(final U object) {
         return valueTransformer.apply(object);
@@ -204,7 +206,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

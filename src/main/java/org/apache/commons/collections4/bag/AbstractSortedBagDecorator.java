@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bag;
 import java.util.Comparator;
 
 import org.apache.commons.collections4.SortedBag;
+import org.apache.commons.collections4.multiset.AbstractSortedMultiSetDecorator;
 
 /**
  * Decorates another {@code SortedBag} to provide additional behavior.
@@ -26,9 +27,11 @@ import org.apache.commons.collections4.SortedBag;
  * Methods are forwarded directly to the decorated bag.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link AbstractSortedMultiSetDecorator} instead.
  */
+@Deprecated
 public abstract class AbstractSortedBagDecorator<E>
         extends AbstractBagDecorator<E> implements SortedBag<E> {
 
@@ -46,7 +49,7 @@ public abstract class AbstractSortedBagDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     protected AbstractSortedBagDecorator(final SortedBag<E> bag) {
@@ -61,7 +64,7 @@ public abstract class AbstractSortedBagDecorator<E>
     /**
      * Gets the bag being decorated.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     @Override
     protected SortedBag<E> decorated() {

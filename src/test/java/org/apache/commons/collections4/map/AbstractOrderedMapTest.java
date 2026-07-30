@@ -34,16 +34,18 @@ import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.comparators.NullComparator;
 import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link OrderedMap}.
  *
- * @param <K> the type of the keys in the maps tested.
- * @param <V> the type of the values in the maps tested.
+ * @param <K> The type of the keys in the maps tested.
+ * @param <V> The type of the values in the maps tested.
  */
 public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    @Nested
     public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
 
         @Override
@@ -118,7 +120,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     /**
      * OrderedMap uses TreeMap as its known comparison.
      *
-     * @return a map that is known to be valid
+     * @return A map that is known to be valid
      */
     @Override
     public Map<K, V> makeConfirmedMap() {

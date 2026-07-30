@@ -77,7 +77,7 @@ import org.apache.commons.collections4.Transformer;
  * more efficient (and convenient) than using nested for loops to extract a list.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.1
  */
 public class ObjectGraphIterator<E> implements Iterator<E> {
@@ -109,8 +109,8 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * The root object can be an iterator, in which case it will be immediately
      * looped around.
      *
-     * @param root  the root object, null will result in an empty iterator
-     * @param transformer  the transformer to use, null will use a no effect transformer
+     * @param root  The root object, null will result in an empty iterator
+     * @param transformer  The transformer to use, null will use a no effect transformer
      */
     @SuppressWarnings("unchecked")
     public ObjectGraphIterator(final E root, final Transformer<? super E, ? extends E> transformer) {
@@ -131,7 +131,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * iterators.
      * </p>
      *
-     * @param rootIterator  the root iterator, null will result in an empty iterator
+     * @param rootIterator  The root iterator, null will result in an empty iterator
      */
     public ObjectGraphIterator(final Iterator<? extends E> rootIterator) {
         this.currentIterator = rootIterator;
@@ -141,7 +141,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /**
      * Finds the next object in the iteration given any start object.
      *
-     * @param value  the value to start from
+     * @param value  The value to start from
      */
     @SuppressWarnings("unchecked")
     protected void findNext(final E value) {
@@ -158,7 +158,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /**
      * Finds the next object in the iteration given an iterator.
      *
-     * @param iterator  the iterator to start from
+     * @param iterator  The iterator to start from
      */
     protected void findNextByIterator(final Iterator<? extends E> iterator) {
         if (iterator != currentIterator) {
@@ -198,7 +198,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /**
      * Gets the next element of the iteration.
      *
-     * @return the next element from the iteration
+     * @return The next element from the iteration
      * @throws NoSuchElementException if all the Iterators are exhausted
      */
     @Override

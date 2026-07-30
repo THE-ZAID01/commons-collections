@@ -63,7 +63,7 @@ import org.apache.commons.collections4.ResettableIterator;
  *   Iterable&lt;Integer&gt; iterable = new IteratorIterable&lt;Integer&gt;(iterator, true);
  * </pre>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.0
  */
 public class IteratorIterable<E> implements Iterable<E> {
@@ -101,7 +101,7 @@ public class IteratorIterable<E> implements Iterable<E> {
      * Constructs a new {@code IteratorIterable} that will use the given
      * iterator.
      *
-     * @param iterator the iterator to use.
+     * @param iterator The iterator to use.
      */
     public IteratorIterable(final Iterator<? extends E> iterator) {
         this(iterator, false);
@@ -111,7 +111,7 @@ public class IteratorIterable<E> implements Iterable<E> {
      * Constructs a new {@code IteratorIterable} that will use the given
      * iterator.
      *
-     * @param iterator the iterator to use.
+     * @param iterator The iterator to use.
      * @param multipleUse {@code true} if the new iterable can be used in multiple iterations
      */
     public IteratorIterable(final Iterator<? extends E> iterator, final boolean multipleUse) {
@@ -126,7 +126,7 @@ public class IteratorIterable<E> implements Iterable<E> {
     /**
      * Gets the iterator wrapped by this iterable.
      *
-     * @return the iterator
+     * @return The iterator
      */
     @Override
     public Iterator<E> iterator() {

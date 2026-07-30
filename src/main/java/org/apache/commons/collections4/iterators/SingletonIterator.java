@@ -16,15 +16,16 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * {@code SingletonIterator} is an {@link java.util.Iterator} over a single
+ * {@code SingletonIterator} is an {@link Iterator} over a single
  * object instance.
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 2.0
  */
 public class SingletonIterator<E>
@@ -46,7 +47,7 @@ public class SingletonIterator<E>
      * Constructs a new {@code SingletonIterator} where {@code remove}
      * is a permitted operation.
      *
-     * @param object  the single object to return from the iterator
+     * @param object  The single object to return from the iterator
      */
     public SingletonIterator(final E object) {
         this(object, true);
@@ -56,7 +57,7 @@ public class SingletonIterator<E>
      * Constructs a new {@code SingletonIterator} optionally choosing if
      * {@code remove} is a permitted operation.
      *
-     * @param object  the single object to return from the iterator
+     * @param object  The single object to return from the iterator
      * @param removeAllowed  true if remove is allowed
      * @since 3.1
      */
@@ -82,7 +83,7 @@ public class SingletonIterator<E>
      * <p>
      * This returns the single object if it hasn't been returned yet.
      *
-     * @return the single object
+     * @return The single object
      * @throws NoSuchElementException if the single object has already
      *    been returned
      */

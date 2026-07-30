@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Transformer;
  * for more details.
  * </p>
  *
- * @param <T> the type of the input and result to the function.
+ * @param <T> The type of the input and result to the function.
  * @since 3.0
  */
 public class InstantiateTransformer<T> implements Transformer<Class<? extends T>, T> {
@@ -54,9 +54,9 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * Transformer method that performs validation.
      *
      * @param <T>  the type of the objects to be created
-     * @param paramTypes  the constructor parameter types
-     * @param args  the constructor arguments
-     * @return an instantiate transformer
+     * @param paramTypes  The constructor parameter types
+     * @param args  The constructor arguments
+     * @return An instantiate transformer
      * @throws IllegalArgumentException if paramTypes does not match args
      */
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(final Class<?>[] paramTypes,
@@ -93,8 +93,8 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * <p>
      * Note: from 4.0, the input parameters will be cloned
      *
-     * @param paramTypes  the constructor parameter types
-     * @param args  the constructor arguments
+     * @param paramTypes  The constructor parameter types
+     * @param args  The constructor arguments
      */
     public InstantiateTransformer(final Class<?>[] paramTypes, final Object[] args) {
         iParamTypes = paramTypes != null ? paramTypes.clone() : null;
@@ -104,8 +104,8 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     /**
      * Transforms the input Class object to a result by instantiation.
      *
-     * @param input  the input object to transform
-     * @return the transformed result
+     * @param input  The input object to transform
+     * @return The transformed result
      */
     @Override
     public T transform(final Class<? extends T> input) {

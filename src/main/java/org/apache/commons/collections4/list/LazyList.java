@@ -61,7 +61,7 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @see GrowthList
  * @since 3.0
  */
@@ -73,10 +73,10 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Factory method to create a lazily instantiating list.
      *
-     * @param <E> the type of the elements in the list
-     * @param list  the list to decorate, must not be null
-     * @param factory  the factory to use for creation, must not be null
-     * @return a new lazy list
+     * @param <E> The type of the elements in the list
+     * @param list  The list to decorate, must not be null
+     * @param factory  The factory to use for creation, must not be null
+     * @return A new lazy list
      * @throws NullPointerException if list or factory is null
      * @since 4.0
      */
@@ -87,10 +87,10 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Transformer method to create a lazily instantiating list.
      *
-     * @param <E> the type of the elements in the list
-     * @param list  the list to decorate, must not be null
-     * @param transformer  the transformer to use for creation, must not be null
-     * @return a new lazy list
+     * @param <E> The type of the elements in the list
+     * @param list  The list to decorate, must not be null
+     * @param transformer  The transformer to use for creation, must not be null
+     * @return A new lazy list
      * @throws NullPointerException if list or transformer is null
      * @since 4.4
      */
@@ -107,27 +107,27 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Constructor that wraps (not copies).
      *
-     * @param list  the list to decorate, must not be null
-     * @param factory  the factory to use for creation, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param factory  The factory to use for creation, must not be null
      * @throws NullPointerException if list or factory is null
      */
     protected LazyList(final List<E> list, final Factory<? extends E> factory) {
         super(list);
-        this.factory = Objects.requireNonNull(factory);
+        this.factory = Objects.requireNonNull(factory, "factory");
         this.transformer = null;
     }
 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param list  the list to decorate, must not be null
-     * @param transformer  the transformer to use for creation, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param transformer  The transformer to use for creation, must not be null
      * @throws NullPointerException if list or transformer is null
      */
     protected LazyList(final List<E> list, final Transformer<Integer, ? extends E> transformer) {
         super(list);
         this.factory = null;
-        this.transformer = Objects.requireNonNull(transformer);
+        this.transformer = Objects.requireNonNull(transformer, "transformer");
     }
 
     private E element(final int index) {
@@ -149,8 +149,8 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * are left with a placeholder that is replaced with a factory or
      * transformer object when requested.
      *
-     * @param index  the index to retrieve
-     * @return the element at the given index
+     * @param index  The index to retrieve
+     * @return The element at the given index
      */
     @Override
     public E get(final int index) {

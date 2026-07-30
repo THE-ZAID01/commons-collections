@@ -33,7 +33,7 @@ import org.apache.commons.collections4.FluentIterable;
  * and {@code B.next()} until both iterators are exhausted.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.1
  */
 public class ZippingIterator<E> implements Iterator<E> {
@@ -51,7 +51,7 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration of the specified iterators.
      *
-     * @param iterators  the array of iterators
+     * @param iterators  The array of iterators
      * @throws NullPointerException if any iterator is null
      */
     public ZippingIterator(final Iterator<? extends E>... iterators) {
@@ -68,8 +68,8 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the two given iterators.
      *
-     * @param a  the first child iterator
-     * @param b  the second child iterator
+     * @param a  The first child iterator
+     * @param b  The second child iterator
      * @throws NullPointerException if either iterator is null
      */
     @SuppressWarnings("unchecked")
@@ -81,9 +81,9 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the three given iterators.
      *
-     * @param a  the first child iterator
-     * @param b  the second child iterator
-     * @param c  the third child iterator
+     * @param a  The first child iterator
+     * @param b  The second child iterator
+     * @param c  The third child iterator
      * @throws NullPointerException if either iterator is null
      */
     @SuppressWarnings("unchecked")
@@ -121,7 +121,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     /**
      * Returns the next element from a child iterator.
      *
-     * @return the next interleaved element
+     * @return The next interleaved element
      * @throws NoSuchElementException if no child iterator has any more elements
      */
     @Override

@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Abstract class for quantification predicates, for example All, Any, None.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 4.0
  */
 public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
@@ -37,7 +37,7 @@ public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T
     /**
      * Constructor that performs no validation.
      *
-     * @param predicates  the predicates to check, not cloned, not null
+     * @param predicates  The predicates to check, not cloned, not null
      */
     public AbstractQuantifierPredicate(final Predicate<? super T>... predicates) {
         iPredicates = predicates;
@@ -46,7 +46,7 @@ public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T
     /**
      * Gets the predicates.
      *
-     * @return a copy of the predicates
+     * @return A copy of the predicates
      * @since 3.1
      */
     @Override

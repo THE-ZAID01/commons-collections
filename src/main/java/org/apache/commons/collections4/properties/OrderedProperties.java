@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.properties;
 
+import java.util.AbstractCollection;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -40,6 +43,80 @@ import java.util.stream.Collectors;
  * @since 4.5.0-M1
  */
 public class OrderedProperties extends Properties {
+
+    /**
+     * A key set view in insertion order.
+     */
+    private final class KeySet extends AbstractSet<Object> {
+
+        @Override
+        public void clear() {
+            OrderedProperties.this.clear();
+        }
+
+        @Override
+        public boolean contains(final Object key) {
+            return containsKey(key);
+        }
+
+        @Override
+        public Iterator<Object> iterator() {
+            return orderedKeysIterator();
+        }
+
+        @Override
+        public boolean remove(final Object key) {
+            return OrderedProperties.this.remove(key) != null;
+        }
+
+        @Override
+        public int size() {
+            return OrderedProperties.this.size();
+        }
+    }
+
+    /**
+     * A values view in key insertion order.
+     */
+    private final class Values extends AbstractCollection<Object> {
+
+        @Override
+        public void clear() {
+            OrderedProperties.this.clear();
+        }
+
+        @Override
+        public boolean contains(final Object value) {
+            return containsValue(value);
+        }
+
+        @Override
+        public Iterator<Object> iterator() {
+            final Iterator<Object> keys = orderedKeysIterator();
+            return new Iterator<Object>() {
+
+                @Override
+                public boolean hasNext() {
+                    return keys.hasNext();
+                }
+
+                @Override
+                public Object next() {
+                    return get(keys.next());
+                }
+
+                @Override
+                public void remove() {
+                    keys.remove();
+                }
+            };
+        }
+
+        @Override
+        public int size() {
+            return OrderedProperties.this.size();
+        }
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -66,6 +143,8 @@ public class OrderedProperties extends Properties {
         final Object compute = super.compute(key, remappingFunction);
         if (compute != null) {
             orderedKeys.add(key);
+        } else {
+            orderedKeys.remove(key);
         }
         return compute;
     }
@@ -106,7 +185,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public synchronized void forEach(final BiConsumer<? super Object, ? super Object> action) {
-        Objects.requireNonNull(action);
+        Objects.requireNonNull(action, "action");
         orderedKeys.forEach(k -> action.accept(k, get(k)));
     }
 
@@ -117,14 +196,53 @@ public class OrderedProperties extends Properties {
 
     @Override
     public Set<Object> keySet() {
-        return orderedKeys;
+        return new KeySet();
     }
 
     @Override
     public synchronized Object merge(final Object key, final Object value,
             final BiFunction<? super Object, ? super Object, ? extends Object> remappingFunction) {
-        orderedKeys.add(key);
-        return super.merge(key, value, remappingFunction);
+        final Object merge = super.merge(key, value, remappingFunction);
+        if (merge != null) {
+            orderedKeys.add(key);
+        } else {
+            orderedKeys.remove(key);
+        }
+        return merge;
+    }
+
+    /**
+     * Creates an iterator over the keys in insertion order whose {@link Iterator#remove()} also removes the mapping.
+     *
+     * @return A new iterator.
+     */
+    private Iterator<Object> orderedKeysIterator() {
+        final Iterator<Object> iterator = orderedKeys.iterator();
+        return new Iterator<Object>() {
+
+            private Object last;
+
+            @Override
+            public boolean hasNext() {
+                return iterator.hasNext();
+            }
+
+            @Override
+            public Object next() {
+                last = iterator.next();
+                return last;
+            }
+
+            @Override
+            public void remove() {
+                // All orderedKeys writes happen under the OrderedProperties monitor.
+                synchronized (OrderedProperties.this) {
+                    // Not remove(Object), which would edit orderedKeys while this iterator walks it.
+                    iterator.remove();
+                    OrderedProperties.super.remove(last);
+                }
+            }
+        };
     }
 
     @Override
@@ -201,5 +319,10 @@ public class OrderedProperties extends Properties {
             }
             sb.append(", ");
         }
+    }
+
+    @Override
+    public Collection<Object> values() {
+        return new Values();
     }
 }

@@ -32,9 +32,9 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Generates an array of integers.
-     * @param size the size of the array
-     * @param bound the upper bound (exclusive) of the values in the array.
-     * @return an array of int.
+     * @param size The size of the array
+     * @param bound The upper bound (exclusive) of the values in the array.
+     * @return An array of int.
      */
     public static int[] generateIntArray(final int size, final int bound) {
         return ThreadLocalRandom.current().ints(size, 0, bound).toArray();
@@ -42,8 +42,8 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Creates a sorted unique array of ints.
-     * @param ary the array to sort and make unique
-     * @return the sorted unique array.
+     * @param ary The array to sort and make unique
+     * @return The sorted unique array.
      */
     public static int[] unique(final int[] ary) {
         return Arrays.stream(ary).distinct().sorted().toArray();
@@ -51,8 +51,8 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Creates a BitSet of indices.
-     * @param ary the array
-     * @return the set.
+     * @param ary The array
+     * @return The set.
      */
     public static BitSet uniqueSet(final int[] ary) {
         final BitSet bs = new BitSet();
@@ -66,7 +66,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     @Override
     protected IndexExtractor createEmptyExtractor() {
         return predicate -> {
-            Objects.requireNonNull(predicate);
+            Objects.requireNonNull(predicate, "predicate");
             return true;
         };
     }
@@ -74,7 +74,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     @Override
     protected IndexExtractor createExtractor() {
         return predicate -> {
-            Objects.requireNonNull(predicate);
+            Objects.requireNonNull(predicate, "predicate");
             for (final int i : values) {
                 if (!predicate.test(i)) {
                     return false;
@@ -105,7 +105,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     void testEntries(final int size) {
         final int[] values = IntStream.range(0, size).toArray();
         final IndexExtractor indexExtractor = predicate -> {
-            Objects.requireNonNull(predicate);
+            Objects.requireNonNull(predicate, "predicate");
             for (final int i : values) {
                 if (!predicate.test(i)) {
                     return false;

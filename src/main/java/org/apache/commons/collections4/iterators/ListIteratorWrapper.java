@@ -24,13 +24,14 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.apache.commons.collections4.ResettableIterator;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
  * Converts an {@link Iterator} into a {@link ResettableListIterator}.
  * For plain {@code Iterator}s this is accomplished by caching the returned
  * elements.  This class can also be used to simply add
- * {@link org.apache.commons.collections4.ResettableIterator ResettableIterator}
+ * {@link ResettableIterator ResettableIterator}
  * functionality to a given {@link ListIterator}.
  * <p>
  * The {@code ListIterator} interface has additional useful methods
@@ -46,7 +47,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * This class implements ResettableListIterator from Commons Collections 3.2.
  * </p>
  *
- * @param <E> the type of elements in this iterator.
+ * @param <E> The type of elements in this iterator.
  * @since 2.1
  */
 public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
@@ -77,7 +78,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Constructs a new {@code ListIteratorWrapper} that will wrap
      * the given iterator.
      *
-     * @param iterator  the iterator to wrap
+     * @param iterator  The iterator to wrap
      * @throws NullPointerException if the iterator is null
      */
     public ListIteratorWrapper(final Iterator<? extends E> iterator) {
@@ -88,7 +89,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Throws {@link UnsupportedOperationException}
      * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
-     * @param obj  the object to add
+     * @param obj  The object to add
      * @throws UnsupportedOperationException if the underlying iterator is not of
      * type {@link ListIterator}
      */
@@ -133,7 +134,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /**
      * Returns the next element from the iterator.
      *
-     * @return the next element from the iterator
+     * @return The next element from the iterator
      * @throws NoSuchElementException if there are no more elements
      */
     @Override
@@ -158,7 +159,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /**
      * Returns the index of the next element.
      *
-     * @return the index of the next element
+     * @return The index of the next element
      */
     @Override
     public int nextIndex() {
@@ -172,7 +173,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /**
      * Returns the previous element.
      *
-     * @return the previous element
+     * @return The previous element
      * @throws NoSuchElementException  if there are no previous elements
      */
     @Override
@@ -252,7 +253,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Throws {@link UnsupportedOperationException}
      * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
-     * @param obj  the object to set
+     * @param obj  The object to set
      * @throws UnsupportedOperationException if the underlying iterator is not of
      * type {@link ListIterator}
      */

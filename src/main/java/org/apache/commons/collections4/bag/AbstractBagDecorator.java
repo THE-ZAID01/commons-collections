@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
+import org.apache.commons.collections4.multiset.AbstractMultiSetDecorator;
 
 /**
  * Decorates another {@code Bag} to provide additional behavior.
@@ -27,9 +28,11 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated bag.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link AbstractMultiSetDecorator} instead.
  */
+@Deprecated
 public abstract class AbstractBagDecorator<E>
         extends AbstractCollectionDecorator<E> implements Bag<E> {
 
@@ -47,7 +50,7 @@ public abstract class AbstractBagDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     protected AbstractBagDecorator(final Bag<E> bag) {
@@ -62,7 +65,7 @@ public abstract class AbstractBagDecorator<E>
     /**
      * Gets the bag being decorated.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     @Override
     protected Bag<E> decorated() {

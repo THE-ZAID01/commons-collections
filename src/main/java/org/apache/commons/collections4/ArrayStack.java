@@ -16,11 +16,13 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.Stack;
 
 /**
- * An implementation of the {@link java.util.Stack} API that is based on an
+ * An implementation of the {@link Stack} API that is based on an
  * {@code ArrayList} instead of a {@code Vector}, so it is not
  * synchronized to protect against multithreaded access.  The implementation
  * is therefore operates faster in environments where you do not need to
@@ -38,10 +40,10 @@ import java.util.EmptyStackException;
  * removed {@code Buffer} interface anymore.
  * </p>
  *
- * @param <E> the type of elements in this list
+ * @param <E> The type of elements in this list
  * @see java.util.Stack
  * @since 1.0
- * @deprecated Use {@link java.util.ArrayDeque} instead (available from Java 1.6)
+ * @deprecated Use {@link ArrayDeque} instead (available from Java 1.6)
  */
 @Deprecated
 public class ArrayStack<E> extends ArrayList<E> {
@@ -59,7 +61,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Constructs a new empty {@code ArrayStack} with an initial size.
      *
-     * @param initialSize  the initial size to use
+     * @param initialSize  The initial size to use
      * @throws IllegalArgumentException  if the specified initial size
      *  is negative
      */
@@ -70,7 +72,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Return {@code true} if this stack is currently empty.
      * <p>
-     * This method exists for compatibility with {@link java.util.Stack}.
+     * This method exists for compatibility with {@link Stack}.
      * New users of this class should use {@code isEmpty} instead.
      * </p>
      *
@@ -83,7 +85,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Returns the top item off of this stack without removing it.
      *
-     * @return the top item on the stack
+     * @return The top item on the stack
      * @throws EmptyStackException  if the stack is empty
      */
     public E peek() throws EmptyStackException {
@@ -98,8 +100,8 @@ public class ArrayStack<E> extends ArrayList<E> {
      * Returns the n'th item down (zero-relative) from the top of this
      * stack without removing it.
      *
-     * @param n  the number of items down to go
-     * @return the n'th item on the stack, zero relative
+     * @param n  The number of items down to go
+     * @return The n'th item on the stack, zero relative
      * @throws EmptyStackException  if there are not enough items on the
      *  stack to satisfy this request
      */
@@ -114,7 +116,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Pops the top item off of this stack and return it.
      *
-     * @return the top item on the stack
+     * @return The top item on the stack
      * @throws EmptyStackException  if the stack is empty
      */
     public E pop() throws EmptyStackException {
@@ -129,8 +131,8 @@ public class ArrayStack<E> extends ArrayList<E> {
      * Pushes a new item onto the top of this stack. The pushed item is also
      * returned. This is equivalent to calling {@code add}.
      *
-     * @param item  the item to be added
-     * @return the item just pushed
+     * @param item  The item to be added
+     * @return The item just pushed
      */
     public E push(final E item) {
         add(item);
@@ -145,8 +147,8 @@ public class ArrayStack<E> extends ArrayList<E> {
      * {@code equals()} method is used to compare to the items
      * in this stack.
      *
-     * @param object  the object to be searched for
-     * @return the 1-based depth into the stack of the object, or -1 if not found
+     * @param object  The object to be searched for
+     * @return The 1-based depth into the stack of the object, or -1 if not found
      */
     public int search(final Object object) {
         int i = size() - 1;        // Current index

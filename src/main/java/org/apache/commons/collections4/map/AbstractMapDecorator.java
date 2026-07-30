@@ -36,8 +36,8 @@ import java.util.Set;
  * But, you might want that loophole, so this class is kept simple.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @since 3.0
  */
 public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, V> {
@@ -56,7 +56,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if the map is null
      */
     protected AbstractMapDecorator(final Map<K, V> map) {
@@ -81,7 +81,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     protected Map<K, V> decorated() {
         return map;

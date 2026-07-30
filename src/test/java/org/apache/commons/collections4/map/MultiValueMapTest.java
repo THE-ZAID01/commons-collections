@@ -23,11 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,8 +40,8 @@ import org.junit.jupiter.api.Test;
 /**
  * TestMultiValueMap.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 @Deprecated
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {
@@ -66,13 +61,6 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         map.put((K) "three", (V) "tres");
         map.put((K) "three", (V) "trois");
         return map;
-    }
-
-    private Object deserialize(final byte[] data) throws IOException, ClassNotFoundException {
-        final ByteArrayInputStream bais = new ByteArrayInputStream(data);
-        final ObjectInputStream iis = new ObjectInputStream(bais);
-
-        return iis.readObject();
     }
 
     @Override
@@ -96,14 +84,6 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         m.put("c", "3b");
         m.put("d", "4");
         return m;
-    }
-
-    private byte[] serialize(final Object object) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-            oos.writeObject(object);
-        }
-        return baos.toByteArray();
     }
 
     @Test

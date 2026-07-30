@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that always throws an exception.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements Serializable {
@@ -40,7 +40,7 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
      * Factory returning the singleton instance.
      *
      * @param <T>  the object type
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Predicate<T> exceptionPredicate() {
@@ -56,7 +56,7 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;
@@ -65,7 +65,7 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
     /**
      * Evaluates the predicate always throwing an exception.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return never
      * @throws FunctorException always
      */

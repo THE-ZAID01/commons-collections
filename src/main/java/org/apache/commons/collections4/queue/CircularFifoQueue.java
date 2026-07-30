@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.queue;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -47,7 +48,7 @@ import org.apache.commons.collections4.BoundedCollection;
  * This queue prevents null objects from being added.
  * </p>
  *
- * @param <E> the type of elements in this collection
+ * @param <E> The type of elements in this collection
  * @since 4.0
  */
 public class CircularFifoQueue<E> extends AbstractCollection<E>
@@ -88,7 +89,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Constructor that creates a queue from the specified collection.
      * The collection size also sets the queue size.
      *
-     * @param coll  the collection to copy into the queue, may not be null
+     * @param coll  The collection to copy into the queue, may not be null
      * @throws NullPointerException if the collection is null
      */
     public CircularFifoQueue(final Collection<? extends E> coll) {
@@ -99,7 +100,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Constructor that creates a queue with the specified size.
      *
-     * @param size  the size of the queue (cannot be changed)
+     * @param size  The size of the queue (cannot be changed)
      * @throws IllegalArgumentException  if the size is &lt; 1
      */
     @SuppressWarnings("unchecked")
@@ -115,7 +116,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Adds the given element to this queue. If the queue is full, the least recently added
      * element is discarded so that a new element can be inserted.
      *
-     * @param element  the element to add
+     * @param element  The element to add
      * @return true, always
      * @throws NullPointerException  if the given element is null
      */
@@ -154,8 +155,8 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Decrements the internal index.
      *
-     * @param index  the index to decrement
-     * @return the updated index
+     * @param index  The index to decrement
+     * @return The updated index
      */
     private int decrement(int index) {
         index--;
@@ -176,8 +177,8 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Gets the element at the specified position in this queue.
      *
-     * @param index the position of the element in the queue
-     * @return the element at position {@code index}
+     * @param index The position of the element in the queue
+     * @return The element at position {@code index}
      * @throws NoSuchElementException if the requested position is outside the range [0, size)
      */
     public E get(final int index) {
@@ -195,8 +196,8 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Increments the internal index.
      *
-     * @param index  the index to increment
-     * @return the updated index
+     * @param index  The index to increment
+     * @return The updated index
      */
     private int increment(int index) {
         index++;
@@ -243,7 +244,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Returns an iterator over this queue's elements.
      *
-     * @return an iterator over this queue's elements
+     * @return An iterator over this queue's elements
      */
     @Override
     public Iterator<E> iterator() {
@@ -312,7 +313,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Gets the maximum size of the collection (the bound).
      *
-     * @return the maximum number of elements the collection can hold
+     * @return The maximum number of elements the collection can hold
      */
     @Override
     public int maxSize() {
@@ -323,7 +324,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Adds the given element to this queue. If the queue is full, the least recently added
      * element is discarded so that a new element can be inserted.
      *
-     * @param element  the element to add
+     * @param element  The element to add
      * @return true, always
      * @throws NullPointerException  if the given element is null
      */
@@ -351,15 +352,21 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Deserializes the queue in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an I/O error occurs while writing to the output stream
      * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
     @SuppressWarnings("unchecked")
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+        if (maxElements < 1) {
+            throw new InvalidObjectException("maxElements must be greater than 0");
+        }
         elements = (E[]) new Object[maxElements];
         final int size = in.readInt();
+        if (size < 0 || size > maxElements) {
+            throw new InvalidObjectException("size is out of range: " + size);
+        }
         for (int i = 0; i < size; i++) {
             elements[i] = (E) in.readObject();
         }
@@ -379,7 +386,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         }
 
         final E element = elements[start];
-        if (null != element) {
+        if (element != null) {
             elements[start++] = null;
 
             if (start >= maxElements) {
@@ -413,7 +420,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

@@ -20,6 +20,8 @@ import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -30,7 +32,7 @@ import org.apache.commons.collections4.KeyValue;
 
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
- * {@link java.util.Map} that performs well in a highly
+ * {@link Map} that performs well in a highly
  * thread-contentious environment.
  * <p>
  * The map supports very efficient
@@ -79,13 +81,13 @@ import org.apache.commons.collections4.KeyValue;
  * <p>
  * The iterators returned by the collection views of this class are <em>not</em>
  * fail-fast.  They will <em>never</em> raise a
- * {@link java.util.ConcurrentModificationException}.  Keys and values
+ * {@link ConcurrentModificationException}.  Keys and values
  * added to the map after the iterator is created do not necessarily appear
  * during iteration.  Similarly, the iterator does not necessarily fail to
  * return keys and values that were removed after the iterator was created.
  * </p>
  * <p>
- * Finally, unlike {@link java.util.HashMap}-style implementations, this
+ * Finally, unlike {@link HashMap}-style implementations, this
  * class <em>never</em> rehashes the map.  The number of buckets is fixed
  * at construction time and never altered.  Performance may degrade if
  * you do not allocate enough buckets upfront.
@@ -94,7 +96,7 @@ import org.apache.commons.collections4.KeyValue;
  * The {@link #atomic(Runnable)} method is provided to allow atomic iterations
  * and bulk operations; however, overuse of {@link #atomic(Runnable) atomic}
  * will basically result in a map that's slower than an ordinary synchronized
- * {@link java.util.HashMap}.
+ * {@link HashMap}.
  * </p>
  * <p>
  * Use this class if you do not require reliable bulk operations and
@@ -102,8 +104,8 @@ import org.apache.commons.collections4.KeyValue;
  * operations will affect the map.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0 (previously in main package v2.1)
  */
 public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
@@ -363,7 +365,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * thread contention.  The more buckets the fewer chances for thread
      * contention.
      *
-     * @param numBuckets  the number of buckets for this map
+     * @param numBuckets  The number of buckets for this map
      */
     @SuppressWarnings("unchecked")
     public StaticBucketMap(final int numBuckets) {
@@ -411,7 +413,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * monitor. If you have twenty thousand buckets in your map, then the recursive method will be invoked twenty thousand times. You have been warned.
      * </p>
      *
-     * @param runnable the code to execute atomically
+     * @param runnable The code to execute atomically
      */
     public void atomic(final Runnable runnable) {
         atomic(Objects.requireNonNull(runnable, "runnable"), 0);
@@ -444,7 +446,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Checks if the map contains the specified key.
      *
-     * @param key  the key to check
+     * @param key  The key to check
      * @return true if found
      */
     @Override
@@ -468,7 +470,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Checks if the map contains the specified value.
      *
-     * @param value  the value to check
+     * @param value  The value to check
      * @return true if found
      */
     @Override
@@ -492,7 +494,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the entry set.
      *
-     * @return the entry set
+     * @return The entry set
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -502,7 +504,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Compares this map to another, as per the Map specification.
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if equal
      */
     @Override
@@ -520,8 +522,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the value associated with the key.
      *
-     * @param key  the key to retrieve
-     * @return the associated value
+     * @param key  The key to retrieve
+     * @return The associated value
      */
     @Override
     public V get(final Object key) {
@@ -572,7 +574,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the hash code, as per the Map specification.
      *
-     * @return the hash code
+     * @return The hash code
      */
     @Override
     public int hashCode() {
@@ -604,7 +606,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the key set.
      *
-     * @return the key set
+     * @return The key set
      */
     @Override
     public Set<K> keySet() {
@@ -614,9 +616,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Puts a new key value mapping into the map.
      *
-     * @param key  the key to use
-     * @param value  the value to use
-     * @return the previous mapping for the key
+     * @param key  The key to use
+     * @param value  The value to use
+     * @return The previous mapping for the key
      */
     @Override
     public V put(final K key, final V value) {
@@ -662,7 +664,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * Puts all the entries from the specified map into this map.
      * This operation is <strong>not atomic</strong> and may have undesired effects.
      *
-     * @param map  the map of entries to add
+     * @param map  The map of entries to add
      */
     @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
@@ -674,8 +676,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Removes the specified key from the map.
      *
-     * @param key  the key to remove
-     * @return the previous value at this key
+     * @param key  The key to remove
+     * @return The previous value at this key
      */
     @Override
     public V remove(final Object key) {
@@ -688,7 +690,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             while (n != null) {
                 if (Objects.equals(n.key, key)) {
                     // Remove this node from the linked list of nodes.
-                    if (null == prev) {
+                    if (prev == null) {
                         // This node was the head, set the next node to be the new head.
                         buckets[hash] = n.next;
                     } else {
@@ -710,7 +712,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * Gets the current size of the map.
      * The value is computed fresh each time the method is called.
      *
-     * @return the current size
+     * @return The current size
      */
     @Override
     public int size() {
@@ -727,7 +729,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the values.
      *
-     * @return the values
+     * @return The values
      */
     @Override
     public Collection<V> values() {

@@ -21,6 +21,7 @@ import java.util.Set;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollection;
+import org.apache.commons.collections4.multiset.TransformedMultiSet;
 import org.apache.commons.collections4.set.TransformedSet;
 
 /**
@@ -35,9 +36,11 @@ import org.apache.commons.collections4.set.TransformedSet;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link TransformedMultiSet} instead.
  */
+@Deprecated
 public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E> {
 
     /** Serialization version */
@@ -51,10 +54,10 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * will be transformed by this method.
      * Contrast this with {@link #transformingBag(Bag, Transformer)}.
      *
-     * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Bag
+     * @param <E> The type of the elements in the bag
+     * @param bag  The bag to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
+     * @return A new transformed Bag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */
@@ -77,10 +80,10 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.
      *
-     * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Bag
+     * @param <E> The type of the elements in the bag
+     * @param bag  The bag to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
+     * @return A new transformed Bag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */
@@ -94,8 +97,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
      *
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param bag  The bag to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if bag or transformer is null
      */
     protected TransformedBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
@@ -115,7 +118,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     /**
      * Gets the decorated bag.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     protected Bag<E> getBag() {
         return (Bag<E>) decorated();

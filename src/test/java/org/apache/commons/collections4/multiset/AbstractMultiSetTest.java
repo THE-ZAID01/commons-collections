@@ -18,6 +18,7 @@ package org.apache.commons.collections4.multiset;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,10 +39,11 @@ import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link org.apache.commons.collections4.MultiSet MultiSet}
+ * Abstract test class for {@link MultiSet MultiSet}
  * methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
@@ -62,6 +64,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> {
 
+    @Nested
     public class MultiSetUniqueSetTest extends AbstractSetTest<T> {
 
         @Override
@@ -129,13 +132,28 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         }
     }
 
+    private static MultiSet.Entry<String> maxCountEntry(final String element) {
+        return new AbstractMultiSet.AbstractEntry<String>() {
+
+            @Override
+            public int getCount() {
+                return Integer.MAX_VALUE;
+            }
+
+            @Override
+            public String getElement() {
+                return element;
+            }
+        };
+    }
+
     /**
      * Bulk test {@link MultiSet#uniqueSet()}.  This method runs through all of
      * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the multiset and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the multiset's unique set
+     * @return A {@link AbstractSetTest} instance for testing the multiset's unique set
      */
     public BulkTest bulkTestMultiSetUniqueSet() {
         return new MultiSetUniqueSetTest();
@@ -144,7 +162,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     /**
      * Returns the {@link #collection} field cast to a {@link MultiSet}.
      *
-     * @return the collection field as a MultiSet
+     * @return The collection field as a MultiSet
      */
     @Override
     public MultiSet<T> getCollection() {
@@ -182,7 +200,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     /**
      * Return a new, empty multiset to used for testing.
      *
-     * @return the multiset to be tested
+     * @return The multiset to be tested
      */
     @Override
     public abstract MultiSet<T> makeObject();
@@ -354,11 +372,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         final MultiSet<T> multiset2 = makeObject();
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
-        assertFalse(multiset.equals(multiset2));
+        assertNotEquals(multiset, multiset2);
         multiset2.add((T) "A");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
         multiset.add((T) "B");
         multiset.add((T) "B");
@@ -367,7 +385,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset2.add((T) "B");
         multiset2.add((T) "B");
         multiset2.add((T) "C");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
     }
 
     @Test
@@ -379,11 +397,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         final MultiSet<T> multiset2 = new HashMultiSet<>();
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
-        assertFalse(multiset.equals(multiset2));
+        assertNotEquals(multiset, multiset2);
         multiset2.add((T) "A");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
         multiset.add((T) "B");
         multiset.add((T) "B");
@@ -392,7 +410,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset2.add((T) "B");
         multiset2.add((T) "B");
         multiset2.add((T) "C");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
     }
 
     @Test
@@ -662,6 +680,24 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     }
 
     @Test
+    void testMultiSetSizeClampsToIntegerMaxValue() {
+        final List<MultiSet.Entry<String>> entries = Arrays.asList(maxCountEntry("A"), maxCountEntry("B"));
+        final MultiSet<String> multiset = new AbstractMultiSet<String>() {
+
+            @Override
+            protected Iterator<MultiSet.Entry<String>> createEntrySetIterator() {
+                return entries.iterator();
+            }
+
+            @Override
+            protected int uniqueElements() {
+                return entries.size();
+            }
+        };
+        assertEquals(Integer.MAX_VALUE, multiset.size());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testMultiSetToArray() {
         if (!isAddSupported()) {
@@ -713,6 +749,34 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(2, a);
         assertEquals(2, b);
         assertEquals(1, c);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testMultiSetViewIteratorRemoveKeepsSizeConsistent() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+        // removing through uniqueSet()/entrySet() drops the whole entry, so
+        // size() must fall by that entry's count and the views stay consistent
+        final MultiSet<T> multiset = makeObject();
+        multiset.add((T) "A", 3);
+        multiset.add((T) "B", 2);
+        final Iterator<T> unique = multiset.uniqueSet().iterator();
+        final T removed = unique.next();
+        final int removedCount = multiset.getCount(removed);
+        unique.remove();
+        assertThrows(IllegalStateException.class, unique::remove);
+        assertEquals(5 - removedCount, multiset.size());
+        assertFalse(multiset.contains(removed));
+        assertEquals(multiset.size(), multiset.toArray().length);
+        final Iterator<MultiSet.Entry<T>> entries = multiset.entrySet().iterator();
+        entries.next();
+        entries.remove();
+        assertThrows(IllegalStateException.class, unique::remove);
+        assertEquals(0, multiset.size());
+        assertTrue(multiset.isEmpty());
+        assertEquals(0, multiset.toArray().length);
     }
 
 }

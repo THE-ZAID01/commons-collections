@@ -41,21 +41,21 @@ import org.junit.jupiter.api.Test;
  * overriding the supportsXxx() methods if necessary.
  * </p>
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
     /**
      * Implement this method to return an iterator over an empty collection.
      *
-     * @return an empty iterator
+     * @return An empty iterator
      */
     public abstract Iterator<E> makeEmptyIterator();
 
     /**
      * Implements the abstract superclass method to return the full iterator.
      *
-     * @return a full iterator
+     * @return A full iterator
      */
     @Override
     public abstract Iterator<E> makeObject();

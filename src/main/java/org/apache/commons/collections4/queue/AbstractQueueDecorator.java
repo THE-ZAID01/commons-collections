@@ -33,7 +33,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * See class Javadoc of AbstractCollectionDecorator for more information.
  * </p>
  *
- * @param <E> the type of the elements in the queue
+ * @param <E> The type of the elements in the queue
  * @since 4.0
  */
 public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecorator<E>
@@ -51,7 +51,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     /**
      * Constructor that wraps (not copies).
      *
-     * @param queue  the queue to decorate, must not be null
+     * @param queue  The queue to decorate, must not be null
      * @throws NullPointerException if queue is null
      */
     protected AbstractQueueDecorator(final Queue<E> queue) {
@@ -61,7 +61,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     /**
      * Gets the queue being decorated.
      *
-     * @return the decorated queue
+     * @return The decorated queue
      */
     @Override
     protected Queue<E> decorated() {

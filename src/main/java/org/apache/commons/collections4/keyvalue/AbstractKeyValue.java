@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
-import org.apache.commons.collections4.KeyValue;
+import java.util.Map.Entry;
 
+import org.apache.commons.collections4.KeyValue;
 /**
  * Abstract pair class to assist with creating {@code KeyValue}
- * and {@link java.util.Map.Entry Map.Entry} implementations.
+ * and {@link Entry Map.Entry} implementations.
  *
- * @param <K> the type of keys
- * @param <V> the type of values
+ * @param <K> The type of keys
+ * @param <V> The type of values
  * @since 3.0
  */
 public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
@@ -37,8 +38,8 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Constructs a new pair with the specified key and given value.
      *
-     * @param key  the key for the entry, may be null
-     * @param value  the value for the entry, may be null
+     * @param key  The key for the entry, may be null
+     * @param value  The value for the entry, may be null
      */
     protected AbstractKeyValue(final K key, final V value) {
         this.key = key;
@@ -48,7 +49,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Gets the key from the pair.
      *
-     * @return the key
+     * @return The key
      */
     @Override
     public K getKey() {
@@ -58,7 +59,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Gets the value from the pair.
      *
-     * @return the value
+     * @return The value
      */
     @Override
     public V getValue() {
@@ -92,7 +93,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Gets a debugging String view of the pair.
      *
-     * @return a String view of the entry
+     * @return A String view of the entry
      */
     @Override
     public String toString() {

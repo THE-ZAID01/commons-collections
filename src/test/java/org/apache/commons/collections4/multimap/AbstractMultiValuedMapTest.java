@@ -50,6 +50,7 @@ import org.apache.commons.collections4.map.AbstractMapTest;
 import org.apache.commons.collections4.multiset.AbstractMultiSetTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -59,11 +60,12 @@ import org.junit.jupiter.api.Test;
  * necessary override the {@link #makeFullMap()} method.
  * </p>
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 
+    @Nested
     public class MultiValuedMapAsMapTest extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
 
         @Override
@@ -175,6 +177,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
+    @Nested
     public class MultiValuedMapEntriesTest extends AbstractCollectionTest<Entry<K, V>> {
 
         @SuppressWarnings("unchecked")
@@ -247,6 +250,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     }
 
+    @Nested
     public class MultiValuedMapKeySetTest extends AbstractSetTest<K> {
 
         @SuppressWarnings("unchecked")
@@ -291,6 +295,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
+    @Nested
     public class MultiValuedMapKeysTest extends AbstractMultiSetTest<K> {
 
         @Override
@@ -348,6 +353,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
+    @Nested
     public class MultiValuedMapValuesTest extends AbstractCollectionTest<V> {
 
         @Override
@@ -441,7 +447,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * operations, {@link #verify()} is invoked to ensure that the map and the
      * other collection views are still valid.
      *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's
+     * @return A {@link AbstractCollectionTest} instance for testing the map's
      *         values collection
      */
     public BulkTest bulkTestMultiValuedMapEntries() {
@@ -454,7 +460,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * {@link #verify()} is invoked to ensure that the map and the other
      * collection views are still valid.
      *
-     * @return a {@link AbstractBagTest} instance for testing the map's values
+     * @return A {@link AbstractBagTest} instance for testing the map's values
      *         collection
      */
     public BulkTest bulkTestMultiValuedMapKeys() {
@@ -467,7 +473,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * {@link #verify()} is invoked to ensure that the map and the other
      * collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the map's key set
+     * @return A {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMultiValuedMapKeySet() {
         return new MultiValuedMapKeySetTest();
@@ -479,7 +485,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * operations, {@link #verify()} is invoked to ensure that the map and the
      * other collection views are still valid.
      *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's
+     * @return A {@link AbstractCollectionTest} instance for testing the map's
      *         values collection
      */
     public BulkTest bulkTestMultiValuedMapValues() {
@@ -500,7 +506,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * This is used to change the assertions used by specific tests.
      * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behavior
+     * @return The iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
@@ -622,7 +628,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * Override to return a MultiValuedMap other than ArrayListValuedHashMap
      * as the confirmed map.
      *
-     * @return a MultiValuedMap that is known to be valid
+     * @return A MultiValuedMap that is known to be valid
      */
     public MultiValuedMap<K, V> makeConfirmedMap() {
         return new ArrayListValuedHashMap<>();
@@ -675,6 +681,19 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     public void setConfirmed(final MultiValuedMap<K, V> confirmed) {
         this.confirmed = confirmed;
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testAddAllThroughGetEmptyLeavesKeyAbsent() {
+        assumeTrue(isAddSupported());
+        resetEmpty();
+        final MultiValuedMap<K, V> map = getMap();
+        final Collection<V> col = map.get((K) "k0");
+        assertFalse(col.addAll(new ArrayList<>()));
+        assertFalse(map.containsKey("k0"));
+        assertFalse(map.keySet().contains("k0"));
+        assertEquals(0, map.size());
     }
 
     @Test
@@ -1305,6 +1324,24 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         map.removeMapping("B", "BC");
         // assertEquals(0, map.get("A").size());
         assertEquals(2, map.get((K) "B").size());
+    }
+
+    @Test
+    void testSizeClampsToIntegerMaxValue() {
+        // bag-valued map: value collection sizes are counts, so the total is cheap to grow past Integer.MAX_VALUE
+        final AbstractMultiValuedMap<String, String> map = new AbstractMultiValuedMap<String, String>(new HashMap<>()) {
+
+            @Override
+            protected Collection<String> createCollection() {
+                return new HashBag<>();
+            }
+        };
+        map.put("k1", "v1");
+        map.put("k2", "v2");
+        ((HashBag<String>) map.getMap().get("k1")).add("v1", Integer.MAX_VALUE - 1);
+        ((HashBag<String>) map.getMap().get("k2")).add("v2", Integer.MAX_VALUE - 1);
+        ((HashBag<String>) map.getMap().get("k1")).add("v1", Integer.MAX_VALUE - 1);
+        assertEquals(Integer.MAX_VALUE, map.size());
     }
 
     @Test

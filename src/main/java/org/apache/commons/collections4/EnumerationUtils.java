@@ -36,9 +36,9 @@ public class EnumerationUtils {
      * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
      * single iteration.
      *
-     * @param <T> the element type
-     * @param enumeration the enumeration to use, may not be null
-     * @return a new, single use {@link Iterable}
+     * @param <T> The element type
+     * @param enumeration The enumeration to use, may not be null
+     * @return A new, single use {@link Iterable}
      * @since 4.5.0-M1
      */
     public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
@@ -53,10 +53,10 @@ public class EnumerationUtils {
      * {@code index} exceeds the number of entries) as a side effect of this method.
      * </p>
      *
-     * @param e  the enumeration to get a value from
-     * @param index  the index to get
-     * @param <T> the type of object in the {@link Enumeration}
-     * @return the object at the specified index
+     * @param e  The enumeration to get a value from
+     * @param index  The index to get
+     * @param <T> The type of object in the {@link Enumeration}
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
      * @since 4.1
@@ -80,9 +80,9 @@ public class EnumerationUtils {
      * <p>As the enumeration is traversed, an ArrayList of its values is
      * created. The new list is returned.</p>
      *
-     * @param <E> the element type
-     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
-     * @return a list containing all elements of the given enumeration
+     * @param <E> The element type
+     * @param enumeration  The enumeration to traverse, which should not be {@code null}.
+     * @return A list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      */
     public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
@@ -93,8 +93,8 @@ public class EnumerationUtils {
      * Override toList(Enumeration) for StringTokenizer as it implements Enumeration&lt;Object&gt;
      * for the sake of backward compatibility.
      *
-     * @param stringTokenizer  the tokenizer to convert to a {@link List}&lt;{@link String}&gt;
-     * @return a list containing all tokens of the given StringTokenizer
+     * @param stringTokenizer  The tokenizer to convert to a {@link List}&lt;{@link String}&gt;
+     * @return A list containing all tokens of the given StringTokenizer
      */
     public static List<String> toList(final StringTokenizer stringTokenizer) {
         final List<String> result = new ArrayList<>(stringTokenizer.countTokens());
@@ -110,9 +110,9 @@ public class EnumerationUtils {
      * <p>As the enumeration is traversed, an HashSet of its values is
      * created. The new set is returned.</p>
      *
-     * @param <E> the element type
-     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
-     * @return a set containing all elements of the given enumeration.
+     * @param <E> The element type
+     * @param enumeration  The enumeration to traverse, which should not be {@code null}.
+     * @return A set containing all elements of the given enumeration.
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      * @since 4.5.0-M4
      */

@@ -21,6 +21,7 @@ import java.util.Set;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.PredicatedCollection;
+import org.apache.commons.collections4.multiset.PredicatedMultiSet;
 
 /**
  * Decorates another {@link Bag} to validate that additions
@@ -40,9 +41,11 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link PredicatedMultiSet} instead.
  */
+@Deprecated
 public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> {
 
     /** Serialization version */
@@ -54,10 +57,10 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * If there are any elements already in the bag being decorated, they
      * are validated.
      *
-     * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
-     * @return a new predicated Bag
+     * @param <E> The type of the elements in the bag
+     * @param bag  The bag to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
+     * @return A new predicated Bag
      * @throws NullPointerException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      * @since 4.0
@@ -72,8 +75,8 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * If there are any elements already in the bag being decorated, they
      * are validated.
      *
-     * @param bag  the bag to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param bag  The bag to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @throws NullPointerException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
@@ -90,7 +93,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
     /**
      * Gets the decorated bag.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     @Override
     protected Bag<E> decorated() {

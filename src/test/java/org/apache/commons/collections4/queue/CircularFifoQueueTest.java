@@ -21,10 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,6 +36,24 @@ import org.junit.jupiter.api.Test;
  * Test cases for CircularFifoQueue.
  */
 public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
+
+    private static int indexOfInt(final byte[] data, final int value) {
+        final byte[] needle = {(byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value};
+        for (int i = 0; i <= data.length - 4; i++) {
+            if (data[i] == needle[0] && data[i + 1] == needle[1]
+                    && data[i + 2] == needle[2] && data[i + 3] == needle[3]) {
+                return i;
+            }
+        }
+        throw new IllegalStateException("value not found in stream");
+    }
+
+    private static void patchInt(final byte[] data, final int pos, final int value) {
+        data[pos] = (byte) (value >>> 24);
+        data[pos + 1] = (byte) (value >>> 16);
+        data[pos + 2] = (byte) (value >>> 8);
+        data[pos + 3] = (byte) value;
+    }
 
     /**
      * {@inheritDoc}
@@ -74,7 +89,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Returns an empty ArrayList.
      *
-     * @return an empty ArrayList
+     * @return An empty ArrayList
      */
     @Override
     public Collection<E> makeConfirmedCollection() {
@@ -84,7 +99,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Returns a full ArrayList.
      *
-     * @return a full ArrayList
+     * @return A full ArrayList
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
@@ -96,7 +111,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Returns an empty CircularFifoQueue that won't overflow.
      *
-     * @return an empty CircularFifoQueue
+     * @return An empty CircularFifoQueue
      */
     @Override
     public Queue<E> makeObject() {
@@ -204,6 +219,28 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
         assertThrows(NoSuchElementException.class, () -> fifo.get(-2));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testDeserializeRejectsCorruptSize() throws Exception {
+        // a stored size larger than maxElements would write past the backing array
+        final CircularFifoQueue<E> full = new CircularFifoQueue<>(7);
+        for (int i = 0; i < 7; i++) {
+            full.add((E) ("x" + i));
+        }
+        final byte[] tooLarge = serialize(full);
+        // first 0x00000007 is maxElements; shrink it so size (7) now exceeds it
+        patchInt(tooLarge, indexOfInt(tooLarge, 7), 2);
+        assertThrows(InvalidObjectException.class, () -> deserialize(tooLarge));
+
+        // a negative stored size leaves the queue in an inconsistent state
+        final CircularFifoQueue<E> partial = new CircularFifoQueue<>(7);
+        partial.add((E) "a");
+        partial.add((E) "b");
+        final byte[] negative = serialize(partial);
+        patchInt(negative, indexOfInt(negative, 2), -1);
+        assertThrows(InvalidObjectException.class, () -> deserialize(negative));
     }
 
     @Test
@@ -415,26 +452,14 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         b.add((E) "a");
         assertEquals(1, b.size());
         assertTrue(b.contains("a"));
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        new ObjectOutputStream(bos).writeObject(b);
-
-        final CircularFifoQueue<E> b2 = (CircularFifoQueue<E>) new ObjectInputStream(
-            new ByteArrayInputStream(bos.toByteArray())).readObject();
-
+        final CircularFifoQueue<E> b2 = serializeDeserialize(b);
         assertEquals(1, b2.size());
         assertTrue(b2.contains("a"));
         b2.add((E) "b");
         assertEquals(2, b2.size());
         assertTrue(b2.contains("a"));
         assertTrue(b2.contains("b"));
-
-        bos = new ByteArrayOutputStream();
-        new ObjectOutputStream(bos).writeObject(b2);
-
-        final CircularFifoQueue<E> b3 = (CircularFifoQueue<E>) new ObjectInputStream(
-            new ByteArrayInputStream(bos.toByteArray())).readObject();
-
+        final CircularFifoQueue<E> b3 = serializeDeserialize(b2);
         assertEquals(2, b3.size());
         assertTrue(b3.contains("a"));
         assertTrue(b3.contains("b"));

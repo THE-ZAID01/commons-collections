@@ -27,7 +27,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * loop.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 4.2
  */
 public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Queue<E> {
@@ -42,7 +42,7 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
      *            the type of the elements in the queue
      * @param queue
      *            the queue to decorate, must not be null
-     * @return a new synchronized Queue
+     * @return A new synchronized Queue
      * @throws NullPointerException
      *             if queue is null
      */
@@ -79,7 +79,7 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
     /**
      * Gets the queue being decorated.
      *
-     * @return the decorated queue
+     * @return The decorated queue
      */
     @Override
     protected Queue<E> decorated() {

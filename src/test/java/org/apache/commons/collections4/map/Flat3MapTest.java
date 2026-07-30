@@ -18,16 +18,14 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -37,16 +35,18 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link Flat3Map}.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    @Nested
     public class FlatMapIteratorTest extends AbstractMapIteratorTest<K, V> {
 
         @Override
@@ -351,6 +351,21 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
+    void testEntrySetRemoveChecksValue() {
+        final Flat3Map<Integer, String> m = new Flat3Map<>();
+        m.put(ONE, TEN);
+        m.put(TWO, TWENTY);
+        // key present but value differs: entrySet().remove must not remove
+        assertFalse(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TWENTY)));
+        assertEquals(2, m.size());
+        assertEquals(TEN, m.get(ONE));
+        // matching key and value: removes
+        assertTrue(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TEN)));
+        assertFalse(m.containsKey(ONE));
+        assertEquals(1, m.size());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testEquals1() {
         final Flat3Map<K, V> map1 = makeObject();
@@ -359,7 +374,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<K, V> map2 = makeObject();
         map2.put((K) "a", (V) "testB");
         map2.put((K) "b", (V) "testA");
-        assertFalse(map1.equals(map2));
+        assertNotEquals(map1, map2);
     }
 
 //    void testCreate() throws Exception {
@@ -382,7 +397,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<K, V> map2 = makeObject();
         map2.put((K) "a", (V) "testB");
         map2.put((K) "c", (V) "testA");
-        assertFalse(map1.equals(map2));
+        assertNotEquals(map1, map2);
     }
 
     @Test
@@ -781,15 +796,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Test
     void testSerialization0() throws Exception {
         final Flat3Map<K, V> map = makeObject();
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(map);
-        final byte[] bytes = bout.toByteArray();
-        out.close();
-        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        final ObjectInputStream in = new ObjectInputStream(bin);
-        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
-        in.close();
+        final Flat3Map<?, ?> ser = serializeDeserialize(map);
         assertEquals(0, map.size());
         assertEquals(0, ser.size());
     }
@@ -800,16 +807,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
-
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(map);
-        final byte[] bytes = bout.toByteArray();
-        out.close();
-        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        final ObjectInputStream in = new ObjectInputStream(bin);
-        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
-        in.close();
+        final Flat3Map<?, ?> ser = serializeDeserialize(map);
         assertEquals(2, map.size());
         assertEquals(2, ser.size());
         assertTrue(ser.containsKey(ONE));
@@ -826,16 +824,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.put((K) TWO, (V) TWENTY);
         map.put((K) TEN, (V) ONE);
         map.put((K) TWENTY, (V) TWO);
-
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(map);
-        final byte[] bytes = bout.toByteArray();
-        out.close();
-        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        final ObjectInputStream in = new ObjectInputStream(bin);
-        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
-        in.close();
+        final Flat3Map<?, ?> ser = serializeDeserialize(map);
         assertEquals(4, map.size());
         assertEquals(4, ser.size());
         assertTrue(ser.containsKey(ONE));

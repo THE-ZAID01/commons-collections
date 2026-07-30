@@ -18,6 +18,7 @@ package org.apache.commons.collections4.comparators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -43,7 +44,7 @@ class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         void expectFalseWhenBothComparatorsWithDifferentItems() {
             final FixedOrderComparator<Integer> comparator1 = new FixedOrderComparator<>(1, 2, 3);
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>(2, 3, 4);
-            assertFalse(comparator1.equals(comparator2));
+            assertNotEquals(comparator1, comparator2);
         }
 
         @Test
@@ -52,13 +53,13 @@ class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             comparator1.setUnknownObjectBehavior(FixedOrderComparator.UnknownObjectBehavior.BEFORE);
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>();
             comparator2.setUnknownObjectBehavior(FixedOrderComparator.UnknownObjectBehavior.AFTER);
-            assertFalse(comparator1.equals(comparator2));
+            assertNotEquals(comparator1, comparator2);
         }
 
         @Test
         void expectFalseWhenFixedOrderComparatorIsComparedWithNull() {
             final FixedOrderComparator<Integer> comparator = new FixedOrderComparator<>();
-            assertFalse(comparator.equals(null));
+            assertNotEquals(comparator, null);
         }
 
         @Test
@@ -72,14 +73,14 @@ class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             final FixedOrderComparator<Integer> comparator1 = new FixedOrderComparator<>(1, 2, 3);
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>(1, 2, 3);
             comparator2.compare(1, 2);
-            assertFalse(comparator1.equals(comparator2));
+            assertNotEquals(comparator1, comparator2);
         }
 
         @Test
         void expectFalseWhenOneComparatorsWithDuplicateItems() {
             final FixedOrderComparator<Integer> comparator1 = new FixedOrderComparator<>(1, 2, 3);
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>(1, 2, 3, 3);
-            assertFalse(comparator1.equals(comparator2));
+            assertNotEquals(comparator1, comparator2);
         }
 
         @Test
@@ -88,20 +89,20 @@ class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>(1, 2, 3);
             comparator1.compare(1, 2);
             comparator2.compare(1, 2);
-            assertTrue(comparator1.equals(comparator2));
+            assertEquals(comparator1, comparator2);
         }
 
         @Test
         void expectTrueWhenBothComparatorsWithoutAnyItems() {
             final FixedOrderComparator<Integer> comparator1 = new FixedOrderComparator<>();
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>();
-            assertTrue(comparator1.equals(comparator2));
+            assertEquals(comparator1, comparator2);
         }
 
         @Test
         void expectTrueWhenBothObjectsAreSame() {
             final FixedOrderComparator<Integer> comparator = new FixedOrderComparator<>();
-            assertTrue(comparator.equals(comparator));
+            assertEquals(comparator, comparator);
         }
     }
 

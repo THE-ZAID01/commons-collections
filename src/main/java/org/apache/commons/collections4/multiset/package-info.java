@@ -24,6 +24,7 @@
  * </p>
  * <ul>
  *   <li>HashMultiSet - implementation that uses a HashMap to store the data</li>
+ *   <li>TreeMultiSet - implementation that uses a TreeMap to store the data</li>
  * </ul>
  * <p>
  * The following decorators are provided in the package:
@@ -31,6 +32,7 @@
  * <ul>
  *   <li>Predicated   - ensures that only elements that are valid according to a predicate can be added</li>
  *   <li>Synchronized - synchronizes method access for multithreaded environments</li>
+ *   <li>Transformed  - transforms elements as they are added</li>
  *   <li>Unmodifiable - ensures the multiset cannot be altered</li>
  * </ul>
  */

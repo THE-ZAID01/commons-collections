@@ -16,14 +16,17 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.Comparator;
+
+import org.apache.commons.collections4.map.HashedMap;
 /**
  * An equation function, which determines equality between objects of type T.
  * <p>
- * It is the functional sibling of {@link java.util.Comparator}; {@link Equator} is to
- * {@link Object} as {@link java.util.Comparator} is to {@link Comparable}.
+ * It is the functional sibling of {@link Comparator}; {@link Equator} is to
+ * {@link Object} as {@link Comparator} is to {@link Comparable}.
  * </p>
  *
- * @param <T> the types of object this {@link Equator} can evaluate.
+ * @param <T> The types of object this {@link Equator} can evaluate.
  * @since 4.0
  */
 public interface Equator<T> {
@@ -31,8 +34,8 @@ public interface Equator<T> {
     /**
      * Evaluates the two arguments for their equality.
      *
-     * @param o1 the first object to be equated.
-     * @param o2 the second object to be equated.
+     * @param o1 The first object to be equated.
+     * @param o2 The second object to be equated.
      * @return whether the two objects are equal.
      */
     boolean equate(T o1, T o2);
@@ -41,10 +44,10 @@ public interface Equator<T> {
      * Calculates the hash for the object, based on the method of equality used in the equate
      * method. This is used for classes that delegate their {@link Object#equals(Object) equals(Object)} method to an
      * Equator (and so must also delegate their {@link Object#hashCode() hashCode()} method), or for implementations
-     * of {@link org.apache.commons.collections4.map.HashedMap} that use an Equator for the key objects.
+     * of {@link HashedMap} that use an Equator for the key objects.
      *
-     * @param o the object to calculate the hash for.
-     * @return the hash of the object.
+     * @param o The object to calculate the hash for.
+     * @return The hash of the object.
      */
     int hash(T o);
 }

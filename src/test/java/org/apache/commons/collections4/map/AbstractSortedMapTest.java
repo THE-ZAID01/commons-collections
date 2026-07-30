@@ -31,10 +31,10 @@ import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.SortedMap}.
+ * Tests {@link SortedMap}.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<SortedMap<K, V>, K, V> {
 
@@ -375,7 +375,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
     /**
      * SortedMap uses TreeMap as its known comparison.
      *
-     * @return a map that is known to be valid
+     * @return A map that is known to be valid
      */
     @Override
     public SortedMap<K, V> makeConfirmedMap() {

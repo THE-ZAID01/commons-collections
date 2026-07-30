@@ -72,7 +72,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
     /**
      * Standard constructor for this class.
      *
-     * @param collection  the collection to generate permutations for
+     * @param collection  The collection to generate permutations for
      * @throws NullPointerException if coll is null
      */
     public PermutationIterator(final Collection<? extends E> collection) {
@@ -103,7 +103,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
     /**
      * Returns the next permutation of the input collection.
      *
-     * @return a list of the permutator's elements representing a permutation
+     * @return A list of the permutator's elements representing a permutation
      * @throws NoSuchElementException if there are no more permutations
      */
     @Override
@@ -152,6 +152,11 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         return result;
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");

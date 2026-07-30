@@ -24,10 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -45,12 +41,16 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.apache.commons.collections4.bag.AbstractBagTest;
+import org.apache.commons.collections4.list.AbstractListTest;
+import org.apache.commons.collections4.map.AbstractMapTest;
+import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.Collection}.
+ * Tests {@link Collection}.
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to
@@ -99,7 +99,7 @@ import org.junit.jupiter.api.Test;
  * for the collection.  Basically, the operation is performed against your
  * collection implementation, and an identical operation is performed against a
  * <em>confirmed</em> collection implementation.  A confirmed collection
- * implementation is something like {@link java.util.ArrayList}, which is
+ * implementation is something like {@link ArrayList}, which is
  * known to conform exactly to its collection interface's contract.  After the
  * operation takes place on both your collection implementation and the
  * confirmed collection implementation, the two collections are compared to see
@@ -120,7 +120,7 @@ import org.junit.jupiter.api.Test;
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
- * views of a map, {@link org.apache.commons.collections4.map.AbstractMapTest AbstractTestMap}
+ * views of a map, {@link AbstractMapTest AbstractTestMap}
  * would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
  * </p>
@@ -137,9 +137,9 @@ import org.junit.jupiter.api.Test;
  * that's compatible with your collection implementation.
  * </p>
  * <p>
- * If you're extending {@link org.apache.commons.collections4.list.AbstractListTest AbstractListTest},
- * {@link org.apache.commons.collections4.set.AbstractSetTest AbstractTestSet},
- * or {@link org.apache.commons.collections4.bag.AbstractBagTest AbstractBagTest},
+ * If you're extending {@link AbstractListTest AbstractListTest},
+ * {@link AbstractSetTest AbstractTestSet},
+ * or {@link AbstractBagTest AbstractBagTest},
  * you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.
@@ -258,6 +258,20 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             }
             fail(msg + ": array 2 does not have object: " + o);
         }
+    }
+
+    protected static void replaceInt(final byte[] bytes, final int from, final int to) {
+        for (int i = 0; i + 4 <= bytes.length; i++) {
+            if (((bytes[i] & 0xFF) << 24 | (bytes[i + 1] & 0xFF) << 16
+                    | (bytes[i + 2] & 0xFF) << 8 | bytes[i + 3] & 0xFF) == from) {
+                bytes[i] = (byte) (to >>> 24);
+                bytes[i + 1] = (byte) (to >>> 16);
+                bytes[i + 2] = (byte) (to >>> 8);
+                bytes[i + 3] = (byte) to;
+                return;
+            }
+        }
+        throw new IllegalStateException("marker not found in stream");
     }
 
     /**
@@ -396,7 +410,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * This is used to change the assertions used by specific tests.
      * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behavior
+     * @return The iteration behavior
      * @see #UNORDERED
      */
     protected int getIterationBehaviour() {
@@ -503,20 +517,20 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     /**
      * Returns a confirmed empty collection.
-     * For instance, an {@link java.util.ArrayList} for lists or a
-     * {@link java.util.HashSet} for sets.
+     * For instance, an {@link ArrayList} for lists or a
+     * {@link HashSet} for sets.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     public abstract Collection<E> makeConfirmedCollection();
 
     /**
      * Returns a confirmed full collection.
-     * For instance, an {@link java.util.ArrayList} for lists or a
-     * {@link java.util.HashSet} for sets.  The returned collection
+     * For instance, an {@link ArrayList} for lists or a
+     * {@link HashSet} for sets.  The returned collection
      * should contain the elements returned by {@link #getFullElements()}.
      *
-     * @return a confirmed full collection
+     * @return A confirmed full collection
      */
     public abstract Collection<E> makeConfirmedFullCollection();
 
@@ -563,7 +577,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      * Sets the collection.
      *
-     * @param collection the Collection<E> to set
+     * @param collection The Collection<E> to set
      */
     public void setCollection(final Collection<E> collection) {
         this.collection = collection;
@@ -572,7 +586,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      * Sets the confirmed.
      *
-     * @param confirmed the Collection<E> to set
+     * @param confirmed The Collection<E> to set
      */
     public void setConfirmed(final Collection<E> confirmed) {
         this.confirmed = confirmed;
@@ -1269,28 +1283,14 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals(obj, dest, "obj != deserialize(serialize(obj)) - EMPTY Collection");
             }
         }
         obj = makeFullCollection();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals(obj, dest, "obj != deserialize(serialize(obj)) - FULL Collection");
             }
@@ -1302,7 +1302,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  raise <code>UnsupportedOperationException.
      */
     @Test
-    void testUnsupportedAdd() {
+    public void testUnsupportedAdd() {
         if (isAddSupported()) {
             return;
         }
@@ -1339,7 +1339,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  operations raise an UnsupportedOperationException.
      */
     @Test
-    void testUnsupportedRemove() {
+    public void testUnsupportedRemove() {
         if (isRemoveSupported()) {
             return;
         }

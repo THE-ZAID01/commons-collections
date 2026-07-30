@@ -56,7 +56,7 @@ public class SetUtils {
      * and {@link #toSet()} methods.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @since 4.1
      */
     public abstract static class SetView<E> extends AbstractSet<E> {
@@ -71,8 +71,8 @@ public class SetUtils {
         /**
          * Copies the contents of this view into the provided set.
          *
-         * @param <S> the set type
-         * @param set  the set for copying the contents
+         * @param <S> The set type
+         * @param set  The set for copying the contents
          */
         public <S extends Set<E>> void copyInto(final S set) {
             CollectionUtils.addAll(set, this);
@@ -82,7 +82,7 @@ public class SetUtils {
          * Return an iterator for this view; the returned iterator is
          * not required to be unmodifiable.
          *
-         * @return a new iterator for this view
+         * @return A new iterator for this view
          */
         protected abstract Iterator<E> createIterator();
 
@@ -99,7 +99,7 @@ public class SetUtils {
         /**
          * Returns a new set containing the contents of this view.
          *
-         * @return a new set containing all elements of this view
+         * @return A new set containing all elements of this view
          */
         public Set<E> toSet() {
             final Set<E> set = new HashSet<>(size());
@@ -124,11 +124,11 @@ public class SetUtils {
      * of {@code b}.
      * </p>
      *
-     * @param <E> the generic type that is able to represent the types contained
+     * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the set to subtract from, must not be null
-     * @param setB  the set to subtract, must not be null
-     * @return a view of the relative complement of the two sets
+     * @param setA  The set to subtract from, must not be null
+     * @param setB  The set to subtract, must not be null
+     * @return A view of the relative complement of the two sets
      * @since 4.1
      */
     public static <E> SetView<E> difference(final Set<? extends E> setA, final Set<? extends E> setB) {
@@ -161,11 +161,11 @@ public class SetUtils {
      * This is equivalent to {@code union(difference(a, b), difference(b, a))}.
      * </p>
      *
-     * @param <E> the generic type that is able to represent the types contained
+     * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the first set, must not be null
-     * @param setB  the second set, must not be null
-     * @return a view of the symmetric difference of the two sets
+     * @param setA  The first set, must not be null
+     * @param setB  The second set, must not be null
+     * @return A view of the symmetric difference of the two sets
      * @since 4.1
      */
     public static <E> SetView<E> disjunction(final Set<? extends E> setA, final Set<? extends E> setB) {
@@ -202,9 +202,9 @@ public class SetUtils {
      * Returns an immutable empty set if the argument is {@code null},
      * or the argument itself otherwise.
      *
-     * @param <T> the element type
-     * @param set the set, possibly {@code null}
-     * @return an empty set if the argument is {@code null}
+     * @param <T> The element type
+     * @param set The set, possibly {@code null}
+     * @return An empty set if the argument is {@code null}
      */
     public static <T> Set<T> emptyIfNull(final Set<T> set) {
         return set == null ? Collections.<T>emptySet() : set;
@@ -213,8 +213,8 @@ public class SetUtils {
     /**
      * Gets a typed empty unmodifiable Set.
      *
-     * @param <E> the element type
-     * @return an empty Set
+     * @param <E> The element type
+     * @return An empty Set
      */
     public static <E> Set<E> emptySet() {
         return Collections.<E>emptySet();
@@ -223,8 +223,8 @@ public class SetUtils {
     /**
      * Gets a typed empty unmodifiable sorted set.
      *
-     * @param <E> the element type
-     * @return an empty sorted Set
+     * @param <E> The element type
+     * @return An empty sorted Set
      */
     @SuppressWarnings("unchecked") // empty set is OK for any type
     public static <E> SortedSet<E> emptySortedSet() {
@@ -240,10 +240,10 @@ public class SetUtils {
      * collection types to use the Set implementation algorithm.
      * </p>
      *
-     * @param <T> the element type
+     * @param <T> The element type
      * @see java.util.Set#hashCode()
-     * @param set  the set to calculate the hash code for, may be null
-     * @return the hash code
+     * @param set  The set to calculate the hash code for, may be null
+     * @return The hash code
      */
     public static <T> int hashCodeForSet(final Collection<T> set) {
         if (set == null) {
@@ -263,9 +263,9 @@ public class SetUtils {
      * Creates a set from the given items. If the passed var-args argument is {@code
      * null}, then the method returns {@code null}.
      *
-     * @param <E> the element type
-     * @param items the elements that make up the new set
-     * @return a set
+     * @param <E> The element type
+     * @param items The elements that make up the new set
+     * @return A set
      * @since 4.3
      */
     public static <E> HashSet<E> hashSet(final E... items) {
@@ -282,11 +282,11 @@ public class SetUtils {
      * ({@code a} and {@code b}).
      * </p>
      *
-     * @param <E> the generic type that is able to represent the types contained
+     * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the first set, must not be null
-     * @param setB  the second set, must not be null
-     * @return a view of the intersection of the two sets
+     * @param setA  The first set, must not be null
+     * @param setB  The second set, must not be null
+     * @return A view of the intersection of the two sets
      * @since 4.1
      */
     public static <E> SetView<E> intersection(final Set<? extends E> setA, final Set<? extends E> setB) {
@@ -333,8 +333,8 @@ public class SetUtils {
      * </blockquote>
      *
      * @see java.util.Set
-     * @param set1  the first set, may be null
-     * @param set2  the second set, may be null
+     * @param set1  The first set, may be null
+     * @param set2  The second set, may be null
      * @return whether the sets are equal by value comparison
      */
     public static boolean isEqualSet(final Collection<?> set1, final Collection<?> set2) {
@@ -366,7 +366,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E>  the element type
-     * @return a new identity hash set
+     * @return A new identity hash set
      * @since 4.1
      */
     public static <E> Set<E> newIdentityHashSet() {
@@ -381,9 +381,9 @@ public class SetUtils {
      * The order is observed through the iterator or toArray.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the set to order, must not be null
-     * @return an ordered set backed by the given set
+     * @param <E> The element type
+     * @param set  The set to order, must not be null
+     * @return An ordered set backed by the given set
      * @throws NullPointerException if the set is null
      */
     public static <E> Set<E> orderedSet(final Set<E> set) {
@@ -399,10 +399,10 @@ public class SetUtils {
      * as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the navigable set to predicate, must not be null
-     * @param predicate  the predicate for the navigable set, must not be null
-     * @return a predicated navigable set backed by the given navigable set
+     * @param <E> The element type
+     * @param set  The navigable set to predicate, must not be null
+     * @param predicate  The predicate for the navigable set, must not be null
+     * @return A predicated navigable set backed by the given navigable set
      * @throws NullPointerException if the set or predicate is null
      * @since 4.1
      */
@@ -420,10 +420,10 @@ public class SetUtils {
      * as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the set to predicate, must not be null
-     * @param predicate  the predicate for the set, must not be null
-     * @return a predicated set backed by the given set
+     * @param <E> The element type
+     * @param set  The set to predicate, must not be null
+     * @param predicate  The predicate for the set, must not be null
+     * @return A predicated set backed by the given set
      * @throws NullPointerException if the set or predicate is null
      */
     public static <E> Set<E> predicatedSet(final Set<E> set, final Predicate<? super E> predicate) {
@@ -439,10 +439,10 @@ public class SetUtils {
      * as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the sorted set to predicate, must not be null
-     * @param predicate  the predicate for the sorted set, must not be null
-     * @return a predicated sorted set backed by the given sorted set
+     * @param <E> The element type
+     * @param set  The sorted set to predicate, must not be null
+     * @param predicate  The predicate for the sorted set, must not be null
+     * @return A predicated sorted set backed by the given sorted set
      * @throws NullPointerException if the set or predicate is null
      */
     public static <E> SortedSet<E> predicatedSortedSet(final SortedSet<E> set,
@@ -471,9 +471,9 @@ public class SetUtils {
      * This method is just a wrapper for {@link Collections#synchronizedSet(Set)}.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the set to synchronize, must not be null
-     * @return a synchronized set backed by the given set
+     * @param <E> The element type
+     * @param set  The set to synchronize, must not be null
+     * @return A synchronized set backed by the given set
      * @throws NullPointerException if the set is null
      */
     public static <E> Set<E> synchronizedSet(final Set<E> set) {
@@ -501,9 +501,9 @@ public class SetUtils {
      * This method is just a wrapper for {@link Collections#synchronizedSortedSet(SortedSet)}.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the sorted set to synchronize, must not be null
-     * @return a synchronized set backed by the given set
+     * @param <E> The element type
+     * @param set  The sorted set to synchronize, must not be null
+     * @return A synchronized set backed by the given set
      * @throws NullPointerException if the set is null
      */
     public static <E> SortedSet<E> synchronizedSortedSet(final SortedSet<E> set) {
@@ -522,10 +522,10 @@ public class SetUtils {
      * If you want that behavior, see {@link TransformedNavigableSet#transformedNavigableSet}.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the navigable set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
-     * @return a transformed set backed by the given set
+     * @param <E> The element type
+     * @param set  The navigable set to transform, must not be null
+     * @param transformer  The transformer for the set, must not be null
+     * @return A transformed set backed by the given set
      * @throws NullPointerException if the set or transformer is null
      * @since 4.1
      */
@@ -546,10 +546,10 @@ public class SetUtils {
      * If you want that behavior, see {@link TransformedSet#transformedSet}.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
-     * @return a transformed set backed by the given set
+     * @param <E> The element type
+     * @param set  The set to transform, must not be null
+     * @param transformer  The transformer for the set, must not be null
+     * @return A transformed set backed by the given set
      * @throws NullPointerException if the set or transformer is null
      */
     public static <E> Set<E> transformedSet(final Set<E> set,
@@ -569,10 +569,10 @@ public class SetUtils {
      * If you want that behavior, see {@link TransformedSortedSet#transformedSortedSet}.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
-     * @return a transformed set backed by the given set
+     * @param <E> The element type
+     * @param set  The set to transform, must not be null
+     * @param transformer  The transformer for the set, must not be null
+     * @return A transformed set backed by the given set
      * @throws NullPointerException if the set or transformer is null
      */
     public static <E> SortedSet<E> transformedSortedSet(final SortedSet<E> set,
@@ -588,11 +588,11 @@ public class SetUtils {
      * The returned view contains all elements of {@code a} and {@code b}.
      * </p>
      *
-     * @param <E> the generic type that is able to represent the types contained
+     * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the first set, must not be null
-     * @param setB  the second set, must not be null
-     * @return a view of the union of the two set
+     * @param setA  The first set, must not be null
+     * @param setB  The second set, must not be null
+     * @return A view of the union of the two set
      * @throws NullPointerException if either input set is null
      * @since 4.1
      */
@@ -631,9 +631,9 @@ public class SetUtils {
      * This method uses the implementation in the decorators subpackage.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the navigable set to make unmodifiable, must not be null
-     * @return an unmodifiable set backed by the given set
+     * @param <E> The element type
+     * @param set  The navigable set to make unmodifiable, must not be null
+     * @return An unmodifiable set backed by the given set
      * @throws NullPointerException if the set is null
      * @since 4.1
      */
@@ -645,9 +645,9 @@ public class SetUtils {
      * Creates an unmodifiable set from the given items. If the passed var-args argument is {@code
      * null}, then the method returns {@code null}.
      *
-     * @param <E> the element type
-     * @param items the elements that make up the new set
-     * @return a set
+     * @param <E> The element type
+     * @param items The elements that make up the new set
+     * @return A set
      * @since 4.3
      */
     public static <E> Set<E> unmodifiableSet(final E... items) {
@@ -663,9 +663,9 @@ public class SetUtils {
      * This method uses the implementation in the decorators subpackage.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the set to make unmodifiable, must not be null
-     * @return an unmodifiable set backed by the given set
+     * @param <E> The element type
+     * @param set  The set to make unmodifiable, must not be null
+     * @return An unmodifiable set backed by the given set
      * @throws NullPointerException if the set is null
      */
     public static <E> Set<E> unmodifiableSet(final Set<? extends E> set) {
@@ -678,9 +678,9 @@ public class SetUtils {
      * This method uses the implementation in the decorators subpackage.
      * </p>
      *
-     * @param <E> the element type
-     * @param set  the sorted set to make unmodifiable, must not be null
-     * @return an unmodifiable set backed by the given set
+     * @param <E> The element type
+     * @param set  The sorted set to make unmodifiable, must not be null
+     * @return An unmodifiable set backed by the given set
      * @throws NullPointerException if the set is null
      */
     public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {

@@ -21,20 +21,51 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link CompositeMap} implementation.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
+
+    @Nested
+    public class MapValuesTest extends AbstractMapTest.MapValuesTest {
+        @Test
+        @Override
+        public void testUnsupportedRemove() {
+            resetFull();
+            assertThrows(UnsupportedOperationException.class, () -> getCollection().remove(null));
+            verify();
+        }
+    }
+
+    /** An empty-iterating map that reports {@code Integer.MAX_VALUE} mappings. */
+    private static Map<String, String> maxSizeMap() {
+        return new AbstractMap<String, String>() {
+
+            @Override
+            public Set<Map.Entry<String, String>> entrySet() {
+                return Collections.emptySet();
+            }
+
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
+        };
+    }
 
     /** Used as a flag in MapMutator tests */
     private boolean pass;
@@ -58,6 +89,11 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    public boolean isValuesRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -216,6 +252,12 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         map.addComposited(buildOne());
         assertTrue(pass);
+    }
+
+    @Test
+    void testSizeClampsToIntegerMaxValue() {
+        final CompositeMap<String, String> map = new CompositeMap<>(maxSizeMap(), maxSizeMap());
+        assertEquals(Integer.MAX_VALUE, map.size());
     }
 
 //    void testCreate() throws Exception {

@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Closure;
  * for more details.
  * </p>
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class ForClosure<T> implements Closure<T> {
@@ -37,11 +37,12 @@ public class ForClosure<T> implements Closure<T> {
      * <p>
      * A null closure or zero count returns the {@code NOPClosure}.
      * A count of one returns the specified closure.
+     * </p>
      *
-     * @param <E> the type that the closure acts on
-     * @param count  the number of times to execute the closure
-     * @param closure  the closure to execute, not null
-     * @return the {@code for} closure
+     * @param <E> The type that the closure acts on
+     * @param count  The number of times to execute the closure
+     * @param closure  The closure to execute, not null
+     * @return The {@code for} closure
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> forClosure(final int count, final Closure<? super E> closure) {
@@ -64,8 +65,8 @@ public class ForClosure<T> implements Closure<T> {
      * Constructor that performs no validation.
      * Use {@code forClosure} if you want that.
      *
-     * @param count  the number of times to execute the closure
-     * @param closure  the closure to execute, not null
+     * @param count  The number of times to execute the closure
+     * @param closure  The closure to execute, not null
      */
     public ForClosure(final int count, final Closure<? super T> closure) {
         iCount = count;
@@ -75,7 +76,7 @@ public class ForClosure<T> implements Closure<T> {
     /**
      * Executes the closure {@code count} times.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {
@@ -87,7 +88,7 @@ public class ForClosure<T> implements Closure<T> {
     /**
      * Gets the closure.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getClosure() {
@@ -97,7 +98,7 @@ public class ForClosure<T> implements Closure<T> {
     /**
      * Gets the count.
      *
-     * @return the count
+     * @return The count
      * @since 3.1
      */
     public int getCount() {

@@ -40,7 +40,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  *                                            NotNullPredicate.notNullPredicate());
  * </pre>
  *
- * @param <E> the type held in the multiset
+ * @param <E> The type held in the multiset
  * @since 4.1
  */
 public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements MultiSet<E> {
@@ -54,10 +54,10 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
      * If there are any elements already in the multiset being decorated, they
      * are validated.
      *
-     * @param <E> the type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
-     * @return a new predicated MultiSet
+     * @param <E> The type of the elements in the multiset
+     * @param multiset  The multiset to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
+     * @return A new predicated MultiSet
      * @throws NullPointerException if multiset or predicate is null
      * @throws IllegalArgumentException if the multiset contains invalid elements
      */
@@ -73,8 +73,8 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
      * are validated.
      * </p>
      *
-     * @param multiset  the multiset to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @throws NullPointerException if multiset or predicate is null
      * @throws IllegalArgumentException if the multiset contains invalid elements
      */
@@ -91,7 +91,7 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
     /**
      * Gets the decorated multiset.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected MultiSet<E> decorated() {

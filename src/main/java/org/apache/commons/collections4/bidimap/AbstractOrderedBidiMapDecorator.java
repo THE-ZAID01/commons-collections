@@ -33,8 +33,8 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0
  */
 public abstract class AbstractOrderedBidiMapDecorator<K, V>
@@ -44,7 +44,7 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if the collection is null
      */
     protected AbstractOrderedBidiMapDecorator(final OrderedBidiMap<K, V> map) {
@@ -54,7 +54,7 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     @Override
     protected OrderedBidiMap<K, V> decorated() {

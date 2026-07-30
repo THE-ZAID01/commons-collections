@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns the opposite of the decorated predicate.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class NotPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
@@ -35,9 +35,9 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     /**
      * Creates the not predicate.
      *
-     * @param <T> the type that the predicate queries
-     * @param predicate  the predicate to decorate, not null
-     * @return the predicate
+     * @param <T> The type that the predicate queries
+     * @param predicate  The predicate to decorate, not null
+     * @return The predicate
      * @throws NullPointerException if the predicate is null
      */
     public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
@@ -51,7 +51,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
      * Constructor that performs no validation.
      * Use {@code notPredicate} if you want that.
      *
-     * @param predicate  the predicate to call after the null check
+     * @param predicate  The predicate to call after the null check
      */
     public NotPredicate(final Predicate<? super T> predicate) {
         iPredicate = predicate;
@@ -60,7 +60,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     /**
      * Gets the predicate being decorated.
      *
-     * @return the predicate as the only element in an array
+     * @return The predicate as the only element in an array
      * @since 3.1
      */
     @Override
@@ -72,7 +72,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     /**
      * Evaluates the predicate returning the opposite to the stored predicate.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if predicate returns false
      */
     @Override

@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -83,6 +84,17 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             "15",
             Byte.valueOf((byte) 16)
         };
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected E getListIteratorAddSetValue() {
+        return (E) Long.valueOf(1000);
+    }
+
+    @Override
+    protected boolean isListIteratorSetSupported() {
+        return false;
     }
 
     @Override
@@ -157,6 +169,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             extraVerify = true;
         }
     }
+
     @Test
     void testCollections304() {
         final List<String> list = new LinkedList<>();
@@ -180,7 +193,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         decoratedList.add(1, s2);
         assertEquals(4, decoratedList.size());
     }
-
     @Test
     @SuppressWarnings("unchecked")
     void testCollections307() {
@@ -278,6 +290,17 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
+    void testDeserializeRejectsDuplicateInBackingList() throws Exception {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>());
+        list.add("alpha");
+        list.add("beta");
+        // push a duplicate straight onto the decorated list, bypassing the uniqueness set
+        list.decorated().add("alpha");
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(list));
+
+    }
+
+    @Test
     void testFactory() {
         final Integer[] array = { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(1) };
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(array));
@@ -314,6 +337,27 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertEquals(4, list.size(),
                 "Duplicate element should not be added, unique element should be added.");
         assertEquals(thirdNewElement, list.get(0), "Third new element should be at index 0");
+    }
+
+    @Test
+    void testIntCollectionAddAllOutOfBoundsIndex() {
+        final SetUniqueList<Integer> list = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
+        list.add(Integer.valueOf(1));
+        final Integer newElement = Integer.valueOf(2);
+
+        // an out-of-range index must be rejected before the uniqueness set is mutated
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(5, newElement));
+        assertFalse(list.contains(newElement), "rejected element leaked into the uniqueness set");
+        assertEquals(list.size(), list.asSet().size(), "list and uniqueness set diverged");
+        // otherwise the element is silently dropped on the next add
+        assertTrue(list.add(newElement));
+        assertEquals(newElement, list.get(1));
+
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> list.addAll(9, Arrays.asList(Integer.valueOf(3), Integer.valueOf(4))));
+        assertFalse(list.contains(Integer.valueOf(3)));
+        assertFalse(list.contains(Integer.valueOf(4)));
+        assertEquals(list.size(), list.asSet().size(), "list and uniqueness set diverged");
     }
 
     @Test

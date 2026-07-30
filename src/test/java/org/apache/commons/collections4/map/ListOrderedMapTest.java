@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,16 +32,18 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap} implementation.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
+    @Nested
     public class KeyListViewTest extends AbstractListTest<K> {
 
         @Override
@@ -85,6 +88,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     }
 
+    @Nested
     public class ValueListViewTest extends AbstractListTest<V> {
 
         @Override
@@ -191,6 +195,16 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         listMap.put(key2, null);
         assertEquals(2, listMap.size(), "Should have two elements");
         listMap.putAll(2, hmap);
+    }
+
+    @Test
+    void testDeserializeRejectsKeyOrderMismatch() throws Exception {
+        final ListOrderedMap<String, String> map = new ListOrderedMap<>();
+        map.put("one", "1");
+        map.put("two", "2");
+        // drop a key straight from the backing map; the insert-order list still names it
+        map.decorated().remove("one");
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test

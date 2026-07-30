@@ -46,8 +46,8 @@ class EmptyPropertiesTest {
     /**
      * Returns the first line from multi-lined string separated by a line separator character
      *
-     * @param x the multi-lined String
-     * @return the first line from x
+     * @param x The multi-lined String
+     * @return The first line from x
      */
     private String getFirstLine(final String x) {
         return x.split("\\R", 2)[0];

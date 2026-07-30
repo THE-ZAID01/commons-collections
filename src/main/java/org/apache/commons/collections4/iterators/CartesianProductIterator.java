@@ -65,7 +65,7 @@ import java.util.Objects;
  * infinite.
  * </p>
  *
- * @param <E> the type of the objects being permuted
+ * @param <E> The type of the objects being permuted
  * @since 4.5.0-M3
  */
 public class CartesianProductIterator<E> implements Iterator<List<E>> {
@@ -88,7 +88,7 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
     /**
      * Constructs a new {@code CartesianProductIterator} instance with given iterables.
      *
-     * @param iterables the iterables to create the Cartesian product from
+     * @param iterables The iterables to create the Cartesian product from
      * @throws NullPointerException if any of the iterables is null
      */
     @SafeVarargs
@@ -121,7 +121,7 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
     /**
      * Returns the next tuple of the input iterables.
      *
-     * @return a list of the input iterables' elements
+     * @return A list of the input iterables' elements
      * @throws NoSuchElementException if there are no more tuples
      */
     @Override
@@ -149,6 +149,11 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
         throw new IllegalStateException("reached unreachable code");
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove");

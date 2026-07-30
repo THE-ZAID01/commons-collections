@@ -29,7 +29,7 @@ import org.apache.commons.collections4.list.AbstractListTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests base {@link java.util.LinkedList} methods and contracts.
+ * Tests base {@link LinkedList} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement the {@link #makeObject()} method.
  * </p>
@@ -43,7 +43,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      * Returns the {@link #collection} field cast to a {@link LinkedList}.
      *
-     * @return the collection field as a List
+     * @return The collection field as a List
      */
     @Override
     public LinkedList<T> getCollection() {
@@ -53,7 +53,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      * Returns the {@link #confirmed} field cast to a {@link LinkedList}.
      *
-     * @return the confirmed field as a List
+     * @return The confirmed field as a List
      */
     protected LinkedList<T> getConfirmedLinkedList() {
         return (LinkedList<T>) getConfirmed();

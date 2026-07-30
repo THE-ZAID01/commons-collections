@@ -41,7 +41,7 @@ package org.apache.commons.collections4.sequence;
  * and the {@code equals} method is specialized.
  * </p>
  *
- * @param <T> the type of object to apply this command.
+ * @param <T> The type of object to apply this command.
  * @see SequencesComparator
  * @see EditScript
  * @since 4.0
@@ -67,14 +67,14 @@ public abstract class EditCommand<T> {
      * This method is invoked for each command belonging to
      * an {@link EditScript EditScript}, in order to implement the visitor design pattern
      *
-     * @param visitor  the visitor to be accepted
+     * @param visitor  The visitor to be accepted
      */
     public abstract void accept(CommandVisitor<T> visitor);
 
     /**
      * Gets the object associated with this command.
      *
-     * @return the object on which the command is applied
+     * @return The object on which the command is applied
      */
     protected T getObject() {
         return object;

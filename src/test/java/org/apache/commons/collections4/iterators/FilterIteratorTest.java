@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the filter iterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -64,7 +64,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Returns a FilterIterator that blocks
      * all of its elements
      *
-     * @param i      the Iterator to "filter"
+     * @param i      The Iterator to "filter"
      * @return "filtered" iterator
      */
     protected FilterIterator<E> makeBlockAllFilter(final Iterator<E> i) {
@@ -87,7 +87,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Returns an array with elements wrapped in a pass-through
      * FilterIterator
      *
-     * @return a filtered iterator
+     * @return A filtered iterator
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -100,7 +100,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Returns a FilterIterator that does not filter
      * any of its elements
      *
-     * @param i      the Iterator to "filter"
+     * @param i      The Iterator to "filter"
      * @return "filtered" iterator
      */
     protected FilterIterator<E> makePassThroughFilter(final Iterator<E> i) {

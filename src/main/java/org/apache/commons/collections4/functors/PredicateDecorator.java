@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Predicate;
  * This interface enables tools to access the decorated predicates.
  * </p>
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.1
  */
 public interface PredicateDecorator<T> extends Predicate<T> {
@@ -35,7 +35,7 @@ public interface PredicateDecorator<T> extends Predicate<T> {
      * The array may be the internal data structure of the predicate and thus
      * should not be altered.
      *
-     * @return the predicates being decorated
+     * @return The predicates being decorated
      */
     Predicate<? super T>[] getPredicates();
 

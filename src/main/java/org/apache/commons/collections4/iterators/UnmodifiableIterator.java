@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Unmodifiable;
  * Calling {@link #remove()} throws {@link UnsupportedOperationException}.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @param <T> The wrapped Iterator type.
  * @since 3.0
  */
@@ -40,8 +40,8 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
      * </p>
      *
      * @param <E>  the element type
-     * @param iterator  the iterator to decorate
-     * @return a new unmodifiable iterator
+     * @param iterator  The iterator to decorate
+     * @return A new unmodifiable iterator
      * @throws NullPointerException if the iterator is null
      */
     public static <E> Iterator<E> unmodifiableIterator(final Iterator<? extends E> iterator) {
@@ -66,7 +66,7 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate.
+     * @param iterator  The iterator to decorate.
      */
     private UnmodifiableIterator(final T iterator) {
         this.iterator = iterator;
@@ -82,6 +82,11 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
         return iterator.next();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     // TODO This method can be removed in 5.0 since it's implemented as a default method in Iterator.
     @Override
     public void remove() {

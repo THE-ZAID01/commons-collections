@@ -28,7 +28,7 @@ import org.apache.commons.collections4.Predicate;
  * those elements that match the specified {@link Predicate Predicate}.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 2.0
  */
 public class FilterListIterator<E> implements ListIterator<E> {
@@ -80,7 +80,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Constructs a new {@code FilterListIterator} that will not
      * function until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  The iterator to use
      */
     public FilterListIterator(final ListIterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -89,8 +89,8 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Constructs a new {@code FilterListIterator}.
      *
-     * @param iterator  the iterator to use
-     * @param predicate  the predicate to use
+     * @param iterator  The iterator to use
+     * @param predicate  The predicate to use
      */
     public FilterListIterator(final ListIterator<? extends E> iterator, final Predicate<? super E> predicate) {
         this.iterator = iterator;
@@ -101,16 +101,17 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Constructs a new {@code FilterListIterator} that will not function
      * until {@link #setListIterator(ListIterator) setListIterator} is invoked.
      *
-     * @param predicate  the predicate to use.
+     * @param predicate  The predicate to use.
      */
     public FilterListIterator(final Predicate<? super E> predicate) {
         this.predicate = predicate;
     }
 
     /**
-     * Not supported.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @param o the element to insert
+     * @param o ignored.
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void add(final E o) {
@@ -130,7 +131,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Gets the iterator this iterator is using.
      *
-     * @return the iterator.
+     * @return The iterator.
      */
     public ListIterator<? extends E> getListIterator() {
         return iterator;
@@ -139,7 +140,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Gets the predicate this iterator is using.
      *
-     * @return the predicate.
+     * @return The predicate.
      */
     public Predicate<? super E> getPredicate() {
         return predicate;
@@ -187,20 +188,24 @@ public class FilterListIterator<E> implements ListIterator<E> {
         return nextIndex - 1;
     }
 
-    /** Not supported. */
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("FilterListIterator.remove() is not supported.");
     }
 
     /**
-     * Not supported.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @param ignored the element with which to replace the last element returned by
-     *          {@code next} or {@code previous}
+     * @param e ignored.
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
-    public void set(final E ignored) {
+    public void set(final E e) {
         throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");
     }
 
@@ -208,7 +213,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  The iterator to use
      */
     public void setListIterator(final ListIterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -244,7 +249,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Sets the predicate this the iterator to use.
      *
-     * @param predicate  the transformer to use
+     * @param predicate  The transformer to use
      */
     public void setPredicate(final Predicate<? super E> predicate) {
         this.predicate = predicate;
