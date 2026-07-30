@@ -379,7 +379,8 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
-     * @return the predicate
+     * @return a new predicate that throws a NullPointerException if the input
+     *   is null, otherwise delegates to the given predicate.
      * @throws NullPointerException if the predicate is null.
      * @see NullIsExceptionPredicate
      */
@@ -394,7 +395,8 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
-     * @return the predicate
+     * @return a new predicate that returns false if the input is null,
+     *   otherwise delegates to the given predicate.
      * @throws NullPointerException if the predicate is null.
      * @see NullIsFalsePredicate
      */
@@ -409,7 +411,8 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
-     * @return the predicate
+     * @return a new predicate that returns true if the input is null,
+     *   otherwise delegates to the given predicate.
      * @throws NullPointerException if the predicate is null.
      * @see NullIsTruePredicate
      */
@@ -483,7 +486,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param transformer  the transformer to call first
      * @param predicate  the predicate to call with the result of the transform
-     * @return the predicate
+     * @return a new predicate that transforms the input object using the given
+     *   transformer and then passes the result to the given predicate.
      * @throws NullPointerException if the transformer or the predicate is null
      * @see TransformedPredicate
      * @since 3.1
